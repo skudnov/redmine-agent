@@ -6,5 +6,5 @@ F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent
 F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.csproj.GenerateResource.Cache
 F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.exe
 F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.pdb
-F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.Login.resources
-F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.Main.resources
+F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.Form_Apikey.resources
+F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.Form_Main.resources

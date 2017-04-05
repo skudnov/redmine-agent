@@ -8,15 +8,17 @@ namespace RedmineAgent
 {
     static class Program
     {
+        public static Controller controllerProgram;
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
         [STAThread]
         static void Main()
         {
+            controllerProgram = new Controller();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main());
+            Application.Run(new Form_Main());
         }
     }
 }
