@@ -14,17 +14,17 @@ namespace RedmineAgent.Models
         [JsonProperty(PropertyName = "login")]
         public string Login { get; set; }
         [JsonProperty(PropertyName = "firstname")]
-        public string Firstname { get; set; }
+        public string FirstName { get; set; }
         [JsonProperty(PropertyName = "lastname")]
-        public string Lastname { get; set; }
+        public string LastName { get; set; }
         [JsonProperty(PropertyName = "mail")]
         public string Mail { get; set; }
         [JsonProperty(PropertyName = "created_on")]
-        public DateTime Created_on { get; set; }
+        public DateTime CreatedOn { get; set; }
         [JsonProperty(PropertyName = "last_login_on")]
-        public DateTime Last_login_on { get; set; }
+        public DateTime LastLoginOn { get; set; }
         [JsonProperty(PropertyName = "apikey")]
-        public string Apikey { get; set; }
+        public string ApiKey { get; set; }
     
     }
 }

@@ -32,6 +32,7 @@
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_newproject = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_newissue = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_info = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_exit = new System.Windows.Forms.ToolStripMenuItem();
             this.входToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_apikey = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,11 +41,12 @@
             this.cb_project = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lv_issue = new System.Windows.Forms.ListView();
-            this.ch_name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_subject = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_tracker = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ch_created = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.mi_info = new System.Windows.Forms.ToolStripMenuItem();
+            this.ch_priority = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_assigned = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_updated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -58,7 +60,7 @@
             this.mi_update});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(464, 24);
+            this.menuStrip.Size = new System.Drawing.Size(554, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "menuStrip";
             // 
@@ -86,6 +88,14 @@
             this.mi_newissue.Name = "mi_newissue";
             this.mi_newissue.Size = new System.Drawing.Size(216, 22);
             this.mi_newissue.Text = "Новая задача";
+            // 
+            // mi_info
+            // 
+            this.mi_info.Enabled = false;
+            this.mi_info.Name = "mi_info";
+            this.mi_info.Size = new System.Drawing.Size(216, 22);
+            this.mi_info.Text = "Информация об аккаунте";
+            this.mi_info.Click += new System.EventHandler(this.mi_info_Click);
             // 
             // mi_exit
             // 
@@ -140,64 +150,72 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.lv_issue);
             this.groupBox2.Location = new System.Drawing.Point(13, 87);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(442, 298);
+            this.groupBox2.Size = new System.Drawing.Size(529, 335);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Задачи:";
             // 
             // lv_issue
             // 
+            this.lv_issue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lv_issue.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.ch_name,
+            this.ch_subject,
             this.ch_tracker,
             this.ch_status,
-            this.ch_created});
+            this.ch_priority,
+            this.ch_assigned,
+            this.ch_updated});
             this.lv_issue.Location = new System.Drawing.Point(7, 20);
             this.lv_issue.Name = "lv_issue";
-            this.lv_issue.Size = new System.Drawing.Size(429, 272);
+            this.lv_issue.Size = new System.Drawing.Size(516, 309);
             this.lv_issue.TabIndex = 0;
             this.lv_issue.UseCompatibleStateImageBehavior = false;
             this.lv_issue.View = System.Windows.Forms.View.Details;
             // 
-            // ch_name
+            // ch_subject
             // 
-            this.ch_name.Text = "Название задачи";
-            this.ch_name.Width = 109;
+            this.ch_subject.Text = "Задача";
+            this.ch_subject.Width = 64;
             // 
             // ch_tracker
             // 
             this.ch_tracker.Text = "Трекер";
-            this.ch_tracker.Width = 64;
             // 
             // ch_status
             // 
             this.ch_status.Text = "Статус";
             // 
-            // ch_created
+            // ch_priority
             // 
-            this.ch_created.Text = "Обновлено";
-            this.ch_created.Width = 94;
+            this.ch_priority.Text = "Приоритет";
+            this.ch_priority.Width = 76;
             // 
-            // mi_info
+            // ch_assigned
             // 
-            this.mi_info.Enabled = false;
-            this.mi_info.Name = "mi_info";
-            this.mi_info.Size = new System.Drawing.Size(216, 22);
-            this.mi_info.Text = "Информация об аккаунте";
-            this.mi_info.Click += new System.EventHandler(this.mi_info_Click);
+            this.ch_assigned.Text = "Назначена";
+            // 
+            // ch_updated
+            // 
+            this.ch_updated.Text = "Обновлено";
             // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(464, 392);
+            this.ClientSize = new System.Drawing.Size(554, 434);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
+            this.MinimumSize = new System.Drawing.Size(570, 473);
             this.Name = "Form_Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Redmine Agent";
@@ -225,11 +243,13 @@
         private System.Windows.Forms.ComboBox cb_project;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ListView lv_issue;
-        private System.Windows.Forms.ColumnHeader ch_name;
+        private System.Windows.Forms.ToolStripMenuItem mi_info;
+        private System.Windows.Forms.ColumnHeader ch_subject;
         private System.Windows.Forms.ColumnHeader ch_tracker;
         private System.Windows.Forms.ColumnHeader ch_status;
-        private System.Windows.Forms.ColumnHeader ch_created;
-        private System.Windows.Forms.ToolStripMenuItem mi_info;
+        private System.Windows.Forms.ColumnHeader ch_priority;
+        private System.Windows.Forms.ColumnHeader ch_assigned;
+        private System.Windows.Forms.ColumnHeader ch_updated;
 
     }
 }

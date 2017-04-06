@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace RedmineAgent.Models
 {
-    class Project
+    public class Project
     {
         [JsonProperty(PropertyName ="id")]
         public int Id { get; set; }
@@ -20,12 +20,10 @@ namespace RedmineAgent.Models
         [JsonProperty(PropertyName = "status")]
         public int Status { get; set; }
         [JsonProperty(PropertyName = "is_public")]
-        public bool Is_public { get; set; }
+        public bool IsPublic { get; set; }
         [JsonProperty(PropertyName = "created_on")]
-        public DateTime Created_on { get; set; }
+        public DateTime CreatedOn { get; set; }
         [JsonProperty(PropertyName = "updated_on")]
-        public DateTime Updated_on { get; set; }
-
-
+        public DateTime UpdatedOn { get; set; }
     }
 }

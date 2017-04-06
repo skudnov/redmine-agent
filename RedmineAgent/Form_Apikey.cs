@@ -13,6 +13,7 @@ namespace RedmineAgent
         {
             InitializeComponent();
             controller = Program.controllerProgram;
+            controller.apiKeyChanged += apiTokenChanged;
         }
 
         private void bt_cancel_Click(object sender, EventArgs e)
@@ -25,6 +26,10 @@ namespace RedmineAgent
             controller.LoginApiKey(tbapikey.Text);
         }
 
+        private void apiTokenChanged()
+        {
+            this.Close();
+        }
         
     }
 }
