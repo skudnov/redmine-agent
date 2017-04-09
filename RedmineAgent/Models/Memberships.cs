@@ -7,15 +7,15 @@ using Newtonsoft.Json;
 
 namespace RedmineAgent.Models
 {
-   public class Issues
+    public class Memberships
     {
-        [JsonProperty(PropertyName = "issues")]
-        public List<Issue> IssuesList { get; set; }
+        [JsonProperty(PropertyName = "memberships")]
+        public List<Membership> MembershipsList { get; set; }
         [JsonProperty(PropertyName = "total_count")]
-        public int TotalCount { get; set; }
+        public int TotalCount { set; get; }
         [JsonProperty(PropertyName = "offset")]
-        public int Offset { get; set; }
+        public int Offset { set; get; }
         [JsonProperty(PropertyName = "limit")]
-        public int Limit { get; set; }
+        public int Limit { set; get; }
     }
 }

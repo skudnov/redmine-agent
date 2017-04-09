@@ -6,14 +6,14 @@ using System.Windows.Forms;
 
 namespace RedmineAgent
 {
-    public partial class Form_Apikey : Form
+    public partial class Form_Apikey : Form 
     {
         Controller controller;
         public Form_Apikey()
         {
             InitializeComponent();
             controller = Program.controllerProgram;
-            controller.apiKeyChanged += apiTokenChanged;
+            controller.apiKeyChanged += apiKeyChanged;
         }
 
         private void bt_cancel_Click(object sender, EventArgs e)
@@ -23,12 +23,35 @@ namespace RedmineAgent
 
         private void bt_login_Click(object sender, EventArgs e)
         {
+
             controller.LoginApiKey(tbapikey.Text);
+          
+
+            if (cbapikey.Checked==true)
+            {
+
+            }
+            else
+            {
+
+            }
         }
 
-        private void apiTokenChanged()
+        private void apiKeyChanged(string check)
         {
-            this.Close();
+            if (check =="NO")
+            {
+                this.Close();
+            }
+            else if (check == "errorkey")
+            {
+                MessageBox.Show("Введенный api-key неправильный. Повторите ввод!","Ошибка Api-key");
+            }
+            else if (check == "errorkey")
+            {
+                MessageBox.Show("Проверьте подключение к интернету!", "Ошибка");
+            }
+           
         }
         
     }

@@ -12,12 +12,16 @@ namespace RedmineAgent
 {
     public class Controller
     {
-        public Action apiKeyChanged;
-        public Action<List<Project>> projectsUpdated;
-        public Action<List<Issue>> issuesUpdated;
+        public Action<string> apiKeyChanged;
+        public Action<List<Project>,string> projectsUpdated;
+        public Action<List<Issue>,string,string> issuesUpdated;
+        int idName;
+        
 
         private List<Project> projects;
         private List<Issue> issues;
+        private List<Membership> membership;
+      
         
         public void LoginApiKey(string apiKey)
         {
@@ -25,7 +29,7 @@ namespace RedmineAgent
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://student-rm.exactpro.com/users/current.json");
                 request.Method = "GET";
-                request.Headers.Add("X-Redmine-API-Key", Properties.Settings.Default.api_key);
+                request.Headers.Add("X-Redmine-API-Key", apiKey);
                 request.Accept = "application/json";
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 StreamReader streamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
@@ -34,12 +38,19 @@ namespace RedmineAgent
                 streamReader.Close();
                 Properties.Settings.Default.api_key = apiKey;
                 Properties.Settings.Default.Save();
+                User users = JsonConvert.DeserializeObject<Users>(jsonResult).UserInfo;
+                idName = users.Id;
                 if (apiKeyChanged != null)
-                    apiKeyChanged();
+                    apiKeyChanged("NO");
             }
-            catch (Exception g)
+            catch (Exception g) 
             {
-                
+                if(g.Message.Contains("401"))
+                apiKeyChanged("errorkey");
+                else if (g.Message.Contains("Невозможно разрешить удаленное имя: 'student-rm.exactpro.com"))
+                {
+                    apiKeyChanged("errorinternet");
+                }
             }
         }
 
@@ -58,13 +69,15 @@ namespace RedmineAgent
                 streamReader.Close();
                 projects = JsonConvert.DeserializeObject<Projects>(jsonResult).ProjectsList;
                 if (projectsUpdated != null)
-                    projectsUpdated(projects);
+                    projectsUpdated(projects,"yes");
             }
             catch (Exception g)
             {
                 
             }
         }
+
+        
 
         public void UpdateIssue(int projectId)
         {
@@ -82,15 +95,33 @@ namespace RedmineAgent
                 streamReader.Close();
                 issues = JsonConvert.DeserializeObject<Issues>(jsonResult).IssuesList;
                 
+                
+                
+
+                // http://student-rm.exactpro.com/projects/5/memberships.json
+
+                HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create("http://student-rm.exactpro.com/projects/"+projectId+"/memberships.json");
+                request2.Method = "GET";
+                request2.Headers.Add("X-Redmine-API-Key", Properties.Settings.Default.api_key);
+                request2.Accept = "application/json";
+                HttpWebResponse response2 = (HttpWebResponse)request2.GetResponse();
+                StreamReader streamReader2 = new StreamReader(response2.GetResponseStream(), Encoding.UTF8);
+                string jsonResult2 = streamReader2.ReadToEnd();
+                response2.Close();
+                streamReader2.Close();
+                membership = JsonConvert.DeserializeObject<Memberships>(jsonResult2).MembershipsList;
+                Membership memberships = membership.Single(x => x.Member.Id == idName);
+              
+                string roles="";
+                 foreach (Role role in memberships.Roles)
+                     roles = role.Name;
+
                 if (issuesUpdated != null)
-                    issuesUpdated(issues);
-
-
+                    issuesUpdated(issues, "yes",roles);
             }
             catch (Exception g)
             {
-              
-
+               
             }
         }
 

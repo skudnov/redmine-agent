@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace RedmineAgent.Models
 {
-    class User
+    public class User
     {
         [JsonProperty (PropertyName = "id")]
         public int Id { get; set; }

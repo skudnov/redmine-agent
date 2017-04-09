@@ -18,19 +18,24 @@ namespace RedmineAgent
             controller = Program.controllerProgram;
             controller.projectsUpdated += projectsUpdated;
             controller.issuesUpdated += issuesUpdated;
+            controller.apiKeyChanged += apiKeyChanged;
             controller.UpdateProject();
-           controller.apiKeyChanged += apiTokenChanged;
+            
             
         }
 
-        private void apiTokenChanged()
+        private void apiKeyChanged(string check)
         {
-            cb_project.SelectedIndex = 0;
-            lv_issue.Items.Clear();
-            mi_info.Enabled = true;
-        }        
+            if (check=="yes")
+            {
+                cb_project.SelectedIndex = 0;
+                lv_issue.Items.Clear();
+                mi_info.Enabled = true;
+                controller.UpdateProject();
+            }
+        }
 
-        public void projectsUpdated(List<Project> projects)
+        public void projectsUpdated(List<Project> projects,string check)
         {
             for (int i = cb_project.Items.Count-1; i >=1 ; i--)
             {
@@ -39,21 +44,34 @@ namespace RedmineAgent
             foreach (Project project in projects)
             {
               
-                cb_project.Items.Add(project.Id+" "+project.Name);
+                cb_project.Items.Add(project.Name + "---" + project.Id);
                 idProject.Add(project.Id);
             }
         }
 
-        public void issuesUpdated(List<Issue> issues)
+        public void issuesUpdated(List<Issue> issues,string check,string roles)
         {
+            if (roles =="Manager")
+            {
+                mi_newproject.Enabled = true;
+                mi_newissue.Enabled = true;
+            }
+            else
+            {
+                mi_newproject.Enabled = false;
+                mi_newissue.Enabled = false;
+            }
+
+            
             foreach (Issue issue in issues)
             {
                 ListViewItem lvi = new ListViewItem(issue.Subject);
                 lvi.SubItems.Add(issue.Tracker.Name);
                 lvi.SubItems.Add(issue.Status.Name);
                 lvi.SubItems.Add(issue.Priority.Name);
+              //  lvi.SubItems.Add();
                 if (issue.AssignedTo == null) 
-                    lvi.SubItems.Add("");                    
+                    lvi.SubItems.Add("(не назначен)");                    
                 else
                 lvi.SubItems.Add(issue.AssignedTo.Name);
                 lvi.SubItems.Add(issue.UpdatedOn.ToShortDateString());
@@ -91,8 +109,13 @@ namespace RedmineAgent
 
         private void mi_info_Click(object sender, EventArgs e)
         {
-            // инфо об аккаунте
+          //// info 
+          //  User userinfo = controller.
+          ////  string s = userinfo.UserInfo;
+          //  MessageBox.Show("apikey" + userinfo.ApiKey);
         }
+
+        
 
         private void cb_project_SelectedIndexChanged(object sender, EventArgs e)
         {
