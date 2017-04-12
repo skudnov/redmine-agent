@@ -15,7 +15,7 @@ namespace RedmineAgent
         public Action<string> apiKeyChanged;
         public Action<List<Project>,string> projectsUpdated;
         public Action<List<Issue>,string,string> issuesUpdated;
-        int idName;
+       // int idName;
         
 
         private List<Project> projects;
@@ -25,55 +25,68 @@ namespace RedmineAgent
         
         public void LoginApiKey(string apiKey)
         {
-            try
+            if (CheckInternet.CheckTheInternet() == "Connected")
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://student-rm.exactpro.com/users/current.json");
-                request.Method = "GET";
-                request.Headers.Add("X-Redmine-API-Key", apiKey);
-                request.Accept = "application/json";
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                StreamReader streamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
-                string jsonResult = streamReader.ReadToEnd();
-                response.Close();
-                streamReader.Close();
-                Properties.Settings.Default.api_key = apiKey;
-                Properties.Settings.Default.Save();
-                User users = JsonConvert.DeserializeObject<Users>(jsonResult).UserInfo;
-                idName = users.Id;
-                if (apiKeyChanged != null)
-                    apiKeyChanged("NO");
-            }
-            catch (Exception g) 
-            {
-                if(g.Message.Contains("401"))
-                apiKeyChanged("errorkey");
-                else if (g.Message.Contains("Невозможно разрешить удаленное имя: 'student-rm.exactpro.com"))
+                try
                 {
-                    apiKeyChanged("errorinternet");
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://student-rm.exactpro.com/users/current.json");
+                    request.Method = "GET";
+                    request.Headers.Add("X-Redmine-API-Key", apiKey);
+                    request.Accept = "application/json";
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                    StreamReader streamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                    string jsonResult = streamReader.ReadToEnd();
+                    response.Close();
+                    streamReader.Close();
+                    User users = JsonConvert.DeserializeObject<Users>(jsonResult).UserInfo;
+                    Properties.Settings.Default.api_key = apiKey;
+                    Properties.Settings.Default.idname = users.Id;
+                    Properties.Settings.Default.Save();
+
+
+                    if (apiKeyChanged != null)
+                        apiKeyChanged("noError");
                 }
+                catch 
+                {
+                        apiKeyChanged("errorKey");
+                }
+
+            }
+            else
+            {
+                apiKeyChanged("errorInternet");
             }
         }
 
         public void UpdateProject()
         {
-            try
+            if (CheckInternet.CheckTheInternet() == "Connected")
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://student-rm.exactpro.com/projects.json");
-                request.Method = "GET";
-                request.Headers.Add("X-Redmine-API-Key", Properties.Settings.Default.api_key);
-                request.Accept = "application/json";
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                StreamReader streamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
-                string jsonResult = streamReader.ReadToEnd();
-                response.Close();
-                streamReader.Close();
-                projects = JsonConvert.DeserializeObject<Projects>(jsonResult).ProjectsList;
-                if (projectsUpdated != null)
-                    projectsUpdated(projects,"yes");
+
+                try
+                {
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://student-rm.exactpro.com/projects.json");
+                    request.Method = "GET";
+                    request.Headers.Add("X-Redmine-API-Key", Properties.Settings.Default.api_key);
+                    request.Accept = "application/json";
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                    StreamReader streamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                    string jsonResult = streamReader.ReadToEnd();
+                    response.Close();
+                    streamReader.Close();
+                    projects = JsonConvert.DeserializeObject<Projects>(jsonResult).ProjectsList;
+                    if (projectsUpdated != null)
+                        projectsUpdated(projects, "noError");
+                }
+                catch (Exception g)
+                {
+                    projectsUpdated(null, "errorKey");
+                }
             }
-            catch (Exception g)
+            else
             {
-                
+                projectsUpdated(null, "errorInternet");
             }
         }
 
@@ -81,6 +94,9 @@ namespace RedmineAgent
 
         public void UpdateIssue(int projectId)
         {
+            if (CheckInternet.CheckTheInternet() == "Connected")
+            {
+            
              try
             {
                 // /issues.json?project_id=2
@@ -110,18 +126,30 @@ namespace RedmineAgent
                 response2.Close();
                 streamReader2.Close();
                 membership = JsonConvert.DeserializeObject<Memberships>(jsonResult2).MembershipsList;
-                Membership memberships = membership.Single(x => x.Member.Id == idName);
+                Membership memberships = membership.Single(x => x.Member.Id == Properties.Settings.Default.idname);
               
                 string roles="";
                  foreach (Role role in memberships.Roles)
                      roles = role.Name;
 
                 if (issuesUpdated != null)
-                    issuesUpdated(issues, "yes",roles);
+                    issuesUpdated(issues, "noError",roles);
             }
             catch (Exception g)
             {
+                if (g.Message.Contains("401"))
+                    issuesUpdated(null,"errorKey",null);
+                else if (g.Message.Contains("Невозможно разрешить удаленное имя: 'student-rm.exactpro.com"))
+                {
+                    apiKeyChanged("errorInternet");
+                }
                
+            }
+              
+            }
+            else
+            {
+                apiKeyChanged("errorInternet");
             }
         }
 
@@ -132,6 +160,8 @@ namespace RedmineAgent
         public void NewIssue()
         {
         }
+
+       
 
     }
 }

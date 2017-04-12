@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheckInternet.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="Form_Apikey.cs">
       <SubType>Form</SubType>

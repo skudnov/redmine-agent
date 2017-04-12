@@ -9,8 +9,8 @@ namespace RedmineAgent
     public partial class Form_Main : Form
     {
         private Controller controller;
-        public  List<int> idProject = new List<int>();
-        
+        public List<int> idProject = new List<int>();
+
         public Form_Main()
         {
             InitializeComponent();
@@ -20,13 +20,14 @@ namespace RedmineAgent
             controller.issuesUpdated += issuesUpdated;
             controller.apiKeyChanged += apiKeyChanged;
             controller.UpdateProject();
-            
-            
+
+
         }
 
         private void apiKeyChanged(string check)
         {
-            if (check=="yes")
+
+            if (check == "yes")
             {
                 cb_project.SelectedIndex = 0;
                 lv_issue.Items.Clear();
@@ -35,48 +36,76 @@ namespace RedmineAgent
             }
         }
 
-        public void projectsUpdated(List<Project> projects,string check)
+        public void projectsUpdated(List<Project> projects, string check)
         {
-            for (int i = cb_project.Items.Count-1; i >=1 ; i--)
+            if (check == "noError")
             {
-                cb_project.Items.RemoveAt(i); ;
-            }          
-            foreach (Project project in projects)
+
+                for (int i = cb_project.Items.Count - 1; i >= 1; i--)
+                {
+                    cb_project.Items.RemoveAt(i); ;
+                }
+                foreach (Project project in projects)
+                {
+
+                    cb_project.Items.Add(project.Name);
+                    idProject.Add(project.Id);
+                }
+            }
+            else if (check == "errorKey")
             {
-              
-                cb_project.Items.Add(project.Name + "---" + project.Id);
-                idProject.Add(project.Id);
+                MessageBox.Show("Введенный api-key неправильный. Повторите ввод!", "Ошибка Api-key");
+                new Form_Apikey().ShowDialog();
+
+            }
+            else if (check == "errorInternet")
+            {
+                MessageBox.Show("Проверьте подключение к интернету!", "Ошибка");
             }
         }
 
-        public void issuesUpdated(List<Issue> issues,string check,string roles)
+        public void issuesUpdated(List<Issue> issues, string check, string roles)
         {
-            if (roles =="Manager")
+            if (check == "noError")
             {
-                mi_newproject.Enabled = true;
-                mi_newissue.Enabled = true;
+                if (roles == "Manager")
+                {
+                    mi_newproject.Enabled = true;
+                    mi_newissue.Enabled = true;
+                }
+                else
+                {
+                    mi_newproject.Enabled = false;
+                    mi_newissue.Enabled = false;
+                }
+
+
+                foreach (Issue issue in issues)
+                {
+                    ListViewItem lvi = new ListViewItem(issue.Subject);
+                    lvi.SubItems.Add(issue.Tracker.Name);
+                    lvi.SubItems.Add(issue.Status.Name);
+                    lvi.SubItems.Add(issue.Priority.Name);
+                    //  lvi.SubItems.Add();
+                    if (issue.AssignedTo == null)
+                        lvi.SubItems.Add("(не назначен)");
+                    else
+                        lvi.SubItems.Add(issue.AssignedTo.Name);
+                    lvi.SubItems.Add(issue.UpdatedOn.ToShortDateString());
+                    lv_issue.Items.Add(lvi);
+                }
             }
-            else
+            else if (check == "errorKey")
             {
-                mi_newproject.Enabled = false;
-                mi_newissue.Enabled = false;
+                MessageBox.Show("Введенный api-key неправильный. Повторите ввод!", "Ошибка Api-key");
+                new Form_Apikey().ShowDialog();
+
+            }
+            else if (check == "errorInternet")
+            {
+                MessageBox.Show("Проверьте подключение к интернету!", "Ошибка");
             }
 
-            
-            foreach (Issue issue in issues)
-            {
-                ListViewItem lvi = new ListViewItem(issue.Subject);
-                lvi.SubItems.Add(issue.Tracker.Name);
-                lvi.SubItems.Add(issue.Status.Name);
-                lvi.SubItems.Add(issue.Priority.Name);
-              //  lvi.SubItems.Add();
-                if (issue.AssignedTo == null) 
-                    lvi.SubItems.Add("(не назначен)");                    
-                else
-                lvi.SubItems.Add(issue.AssignedTo.Name);
-                lvi.SubItems.Add(issue.UpdatedOn.ToShortDateString());
-                lv_issue.Items.Add(lvi);              
-            }
         }
 
 
@@ -97,25 +126,26 @@ namespace RedmineAgent
             if (Result2 == DialogResult.No)
             {
                 e.Cancel = true;
-            }               
+            }
         }
 
         private void mi_update_Click(object sender, EventArgs e)
         {
             controller.UpdateProject();
             cb_project.SelectedIndex = 0;
-            lv_issue.Items.Clear();            
+            lv_issue.Items.Clear();
         }
 
         private void mi_info_Click(object sender, EventArgs e)
         {
-          //// info 
-          //  User userinfo = controller.
-          ////  string s = userinfo.UserInfo;
-          //  MessageBox.Show("apikey" + userinfo.ApiKey);
+
+            //// info 
+            //  User userinfo = controller.
+            ////  string s = userinfo.UserInfo;
+            //  MessageBox.Show("apikey" + userinfo.ApiKey);
         }
 
-        
+
 
         private void cb_project_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -124,11 +154,12 @@ namespace RedmineAgent
                 lv_issue.Items.Clear();
             }
             else
-            {   
+            {
                 lv_issue.Items.Clear();
-           //     string projectName = cb_project.SelectedItem.ToString();
-                controller.UpdateIssue(idProject[cb_project.SelectedIndex-1]);
+                //     string projectName = cb_project.SelectedItem.ToString();
+                controller.UpdateIssue(idProject[cb_project.SelectedIndex - 1]);
             }
-        }      
+        }
     }
 }
+

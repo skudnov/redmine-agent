@@ -34,5 +34,17 @@ namespace RedmineAgent.Properties {
                 this["api_key"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int idname {
+            get {
+                return ((int)(this["idname"]));
+            }
+            set {
+                this["idname"] = value;
+            }
+        }
     }
 }

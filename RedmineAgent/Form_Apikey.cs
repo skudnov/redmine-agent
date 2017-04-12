@@ -26,10 +26,10 @@ namespace RedmineAgent
 
             controller.LoginApiKey(tbapikey.Text);
           
-
+            // запомнить или нет
             if (cbapikey.Checked==true)
             {
-
+                
             }
             else
             {
@@ -39,15 +39,15 @@ namespace RedmineAgent
 
         private void apiKeyChanged(string check)
         {
-            if (check =="NO")
+            if (check =="noError")
             {
                 this.Close();
             }
-            else if (check == "errorkey")
+            else if (check == "errorKey")
             {
                 MessageBox.Show("Введенный api-key неправильный. Повторите ввод!","Ошибка Api-key");
             }
-            else if (check == "errorkey")
+            else if (check == "errorInternet")
             {
                 MessageBox.Show("Проверьте подключение к интернету!", "Ошибка");
             }

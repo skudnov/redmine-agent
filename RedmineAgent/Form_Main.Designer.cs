@@ -47,6 +47,7 @@
             this.ch_priority = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_assigned = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_updated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.mi_ifoprj = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -57,7 +58,8 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
             this.входToolStripMenuItem,
-            this.mi_update});
+            this.mi_update,
+            this.mi_ifoprj});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(554, 24);
@@ -91,7 +93,6 @@
             // 
             // mi_info
             // 
-            this.mi_info.Enabled = false;
             this.mi_info.Name = "mi_info";
             this.mi_info.Size = new System.Drawing.Size(216, 22);
             this.mi_info.Text = "Информация об аккаунте";
@@ -206,6 +207,13 @@
             // 
             this.ch_updated.Text = "Обновлено";
             // 
+            // mi_ifoprj
+            // 
+            this.mi_ifoprj.Enabled = false;
+            this.mi_ifoprj.Name = "mi_ifoprj";
+            this.mi_ifoprj.Size = new System.Drawing.Size(75, 20);
+            this.mi_ifoprj.Text = "О проекте";
+            // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -214,6 +222,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip);
+            this.DoubleBuffered = true;
             this.MainMenuStrip = this.menuStrip;
             this.MinimumSize = new System.Drawing.Size(570, 473);
             this.Name = "Form_Main";
@@ -250,6 +259,7 @@
         private System.Windows.Forms.ColumnHeader ch_priority;
         private System.Windows.Forms.ColumnHeader ch_assigned;
         private System.Windows.Forms.ColumnHeader ch_updated;
+        private System.Windows.Forms.ToolStripMenuItem mi_ifoprj;
 
     }
 }

@@ -11,5 +11,6 @@ namespace RedmineAgent.Models
     {
         [JsonProperty(PropertyName = "user")]
         public User UserInfo { get; set; }
-    }
+      
+      }
 }
