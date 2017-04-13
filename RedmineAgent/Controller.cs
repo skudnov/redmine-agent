@@ -22,7 +22,7 @@ namespace RedmineAgent
         private List<Project> projects;
         private List<Issue> issues;
         private List<Membership> membership;
-        private List<User> user;
+        private User users;
       
       
         public void LoginApiKey(string apiKey)
@@ -40,7 +40,7 @@ namespace RedmineAgent
                     string jsonResult = streamReader.ReadToEnd();
                     response.Close();
                     streamReader.Close();
-                    User users = JsonConvert.DeserializeObject<Users>(jsonResult).UserInfo;
+                    users = JsonConvert.DeserializeObject<Users>(jsonResult).UserInfo;
                     Properties.Settings.Default.api_key = apiKey;
                     Properties.Settings.Default.idname = users.Id;
                     Properties.Settings.Default.Save();
@@ -154,6 +154,32 @@ namespace RedmineAgent
                
         }
 
+        public User UserInfo()
+        {
+            return users;
+        }
+        public List<Issue> IssueInfo()
+        {
+            return issues;
+        }
+        public Project ProjectInfo(int projectid)
+        {
+            Project project_info = null;
+            foreach (Project pr in projects)
+            {
+                if (pr.Id==projectid)
+                {
+                    project_info = pr;
+                    break;
+                }
+                
+            }
+            return project_info;
+        }
+        public List<Membership> MembershipInfo()
+        {
+            return membership;
+        }
        
 
     }

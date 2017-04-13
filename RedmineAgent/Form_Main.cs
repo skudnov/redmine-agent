@@ -10,6 +10,7 @@ namespace RedmineAgent
     {
         private Controller controller;
         public List<int> idProject = new List<int>();
+        public List<Membership> membershipslist = new List<Membership>();
 
         public Form_Main()
         {
@@ -68,7 +69,7 @@ namespace RedmineAgent
                     lb_role.Text = "Роль в проекте: Менеджер";
                     mi_newissue.Enabled = true;
                 }
-                    else if (roles == "Developer")
+                else if (roles == "Developer")
                 {
                     lb_role.Text = "Роль в проекте: Разработчик";
                 }
@@ -76,9 +77,9 @@ namespace RedmineAgent
                 {
                     lb_role.Text = "Роль в проекте: Репортер";
                 }
-                else if (roles ==null)
+                else if (roles == null)
                 {
-                    lb_role.Text = "Вы не состоите в проекте";
+                    lb_role.Text = "Вы не состоите в проекте!";
                 }
                 else
                 {
@@ -140,10 +141,8 @@ namespace RedmineAgent
 
         private void mi_info_Click(object sender, EventArgs e)
         {
-            //// info 
-            //  User userinfo = controller.
-            ////  string s = userinfo.UserInfo;
-            //  MessageBox.Show("apikey" + userinfo.ApiKey);
+            User user = controller.UserInfo();
+            MessageBox.Show(" id: " + user.Id + "\n\r" + " Логин: " + user.Login + "\n\r" + " Имя: " + user.FirstName + "\n\r" + " Фамилия: " + user.LastName + "\n\r" + " mail: " + user.Mail + "\n\r" + " Дата создания: " + user.CreatedOn + "\n\r" + " Последнее подключение: " + user.LastLoginOn + "\n\r" + " Api ключ: " + user.ApiKey, "Информация об аккаунте");
         }
 
         private void cb_project_SelectedIndexChanged(object sender, EventArgs e)
@@ -161,6 +160,32 @@ namespace RedmineAgent
                 controller.UpdateIssue(idProject[cb_project.SelectedIndex - 1]);
                 mi_ifoprj.Enabled = true;
             }
+        }
+
+        private void mi_ifoprj_Click(object sender, EventArgs e)
+        {
+            Project project = controller.ProjectInfo(idProject[cb_project.SelectedIndex - 1]);
+            membershipslist = controller.MembershipInfo();
+
+            string manager = "";
+            string developer = "";
+            Membership roles = null;
+            foreach (Membership mb in membershipslist)
+            {
+                roles = mb;
+                foreach (Role rl in roles.Roles)
+                {
+                    if (rl.Name == "Manager")
+
+                        manager = manager + mb.Member.Name;
+
+                    else if (rl.Name == "Developer")
+                        developer =developer+ mb.Member.Name;
+
+                }
+            }
+            MessageBox.Show(" id: " + project.Id + "\n\r" + " Название проекта: " + project.Name + "\n\r " + "Статус: " + project.Status + "\n\r" + " Идентификатор: " + project.Indentifier + "\n\r" + " Публичный: " + project.IsPublic + "\n\r" + " Дата изменения: " + project.UpdatedOn + "\n\r" + " Дата создания: " + project.CreatedOn + "\n\r" + " Менеджеры: " + manager + "\n\r" + " Разработчики: " + developer,"Информация о проекте!");
+
         }
     }
 }

@@ -126,6 +126,7 @@
             this.mi_ifoprj.Name = "mi_ifoprj";
             this.mi_ifoprj.Size = new System.Drawing.Size(75, 20);
             this.mi_ifoprj.Text = "О проекте";
+            this.mi_ifoprj.Click += new System.EventHandler(this.mi_ifoprj_Click);
             // 
             // groupBox1
             // 

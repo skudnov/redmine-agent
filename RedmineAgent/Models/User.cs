@@ -23,7 +23,7 @@ namespace RedmineAgent.Models
         public DateTime CreatedOn { get; set; }
         [JsonProperty(PropertyName = "last_login_on")]
         public DateTime LastLoginOn { get; set; }
-        [JsonProperty(PropertyName = "apikey")]
+        [JsonProperty(PropertyName = "api_key")]
         public string ApiKey { get; set; }
     
     }
