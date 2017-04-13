@@ -30,7 +30,6 @@
         {
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mi_newproject = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_newissue = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_info = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_exit = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,20 +69,12 @@
             // файлToolStripMenuItem
             // 
             this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mi_newproject,
             this.mi_newissue,
             this.mi_info,
             this.mi_exit});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.файлToolStripMenuItem.Text = "Файл";
-            // 
-            // mi_newproject
-            // 
-            this.mi_newproject.Enabled = false;
-            this.mi_newproject.Name = "mi_newproject";
-            this.mi_newproject.Size = new System.Drawing.Size(216, 22);
-            this.mi_newproject.Text = "Новый проект";
             // 
             // mi_newissue
             // 
@@ -256,7 +247,6 @@
 
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mi_newproject;
         private System.Windows.Forms.ToolStripMenuItem mi_newissue;
         private System.Windows.Forms.ToolStripMenuItem mi_exit;
         private System.Windows.Forms.ToolStripMenuItem входToolStripMenuItem;

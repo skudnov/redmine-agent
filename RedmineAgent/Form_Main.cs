@@ -76,6 +76,10 @@ namespace RedmineAgent
                 {
                     lb_role.Text = "Роль в проекте: Репортер";
                 }
+                else if (roles ==null)
+                {
+                    lb_role.Text = "Вы не состоите в проекте";
+                }
                 else
                 {
                     mi_newissue.Enabled = false;

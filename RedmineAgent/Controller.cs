@@ -22,6 +22,7 @@ namespace RedmineAgent
         private List<Project> projects;
         private List<Issue> issues;
         private List<Membership> membership;
+        private List<User> user;
       
       
         public void LoginApiKey(string apiKey)
@@ -114,16 +115,31 @@ namespace RedmineAgent
                     response2.Close();
                     streamReader2.Close();
                     membership = JsonConvert.DeserializeObject<Memberships>(jsonResult2).MembershipsList;
-                    Membership memberships = membership.Single(x => x.Member.Id == Properties.Settings.Default.idname);
                     string roles = "";
-                    foreach (Role role in memberships.Roles)
-                        roles = role.Name;
+                    Membership rolesmember=null;
+                    bool check = false;
+                    foreach(Membership ol in membership)
+                    {
+                        if (ol.Member.Id == Properties.Settings.Default.idname)
+                        {
+                            rolesmember = ol;
+                            check = true;
+                            break;
+                        }
+
+                    }
+                    if (!check)
+                    {
+                        issuesUpdated(issues,"noError",null);
+                    }
+                   else
+                    foreach (Role role in rolesmember.Roles)
+                     roles = role.Name;
                     if (issuesUpdated != null)
                         issuesUpdated(issues, "noError", roles);
                 }
-                catch (Exception g)
-                {
-                     
+                catch
+                {                    
                     issuesUpdated(null, "errorKey", null);
                 }
             }
@@ -133,12 +149,9 @@ namespace RedmineAgent
             }
         }
 
-        public void NewProject()
-        {
-        }
-
         public void NewIssue()
         {
+               
         }
 
        
