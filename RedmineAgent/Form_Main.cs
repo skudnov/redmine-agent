@@ -20,14 +20,11 @@ namespace RedmineAgent
             controller.issuesUpdated += issuesUpdated;
             controller.apiKeyChanged += apiKeyChanged;
             controller.UpdateProject();
-
-
         }
 
         private void apiKeyChanged(string check)
         {
-
-            if (check == "yes")
+            if (check == "noError")
             {
                 cb_project.SelectedIndex = 0;
                 lv_issue.Items.Clear();
@@ -40,14 +37,12 @@ namespace RedmineAgent
         {
             if (check == "noError")
             {
-
                 for (int i = cb_project.Items.Count - 1; i >= 1; i--)
                 {
                     cb_project.Items.RemoveAt(i); ;
                 }
                 foreach (Project project in projects)
                 {
-
                     cb_project.Items.Add(project.Name);
                     idProject.Add(project.Id);
                 }
@@ -56,7 +51,6 @@ namespace RedmineAgent
             {
                 MessageBox.Show("Введенный api-key неправильный. Повторите ввод!", "Ошибка Api-key");
                 new Form_Apikey().ShowDialog();
-
             }
             else if (check == "errorInternet")
             {
@@ -68,17 +62,24 @@ namespace RedmineAgent
         {
             if (check == "noError")
             {
+                lb_role.Visible = true;
                 if (roles == "Manager")
                 {
-                    mi_newproject.Enabled = true;
+                    lb_role.Text = "Роль в проекте: Менеджер";
                     mi_newissue.Enabled = true;
+                }
+                    else if (roles == "Developer")
+                {
+                    lb_role.Text = "Роль в проекте: Разработчик";
+                }
+                else if (roles == "Reporter")
+                {
+                    lb_role.Text = "Роль в проекте: Репортер";
                 }
                 else
                 {
-                    mi_newproject.Enabled = false;
                     mi_newissue.Enabled = false;
                 }
-
 
                 foreach (Issue issue in issues)
                 {
@@ -105,10 +106,7 @@ namespace RedmineAgent
             {
                 MessageBox.Show("Проверьте подключение к интернету!", "Ошибка");
             }
-
         }
-
-
 
         private void mi_apikey_Click(object sender, EventArgs e)
         {
@@ -138,26 +136,26 @@ namespace RedmineAgent
 
         private void mi_info_Click(object sender, EventArgs e)
         {
-
             //// info 
             //  User userinfo = controller.
             ////  string s = userinfo.UserInfo;
             //  MessageBox.Show("apikey" + userinfo.ApiKey);
         }
 
-
-
         private void cb_project_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cb_project.SelectedIndex == 0)
             {
                 lv_issue.Items.Clear();
+                mi_ifoprj.Enabled = false;
+                lb_role.Visible = false;
             }
             else
             {
                 lv_issue.Items.Clear();
                 //     string projectName = cb_project.SelectedItem.ToString();
                 controller.UpdateIssue(idProject[cb_project.SelectedIndex - 1]);
+                mi_ifoprj.Enabled = true;
             }
         }
     }

@@ -42,6 +42,7 @@ namespace RedmineAgent
             if (check =="noError")
             {
                 this.Close();
+                
             }
             else if (check == "errorKey")
             {

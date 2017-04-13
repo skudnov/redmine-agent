@@ -37,6 +37,7 @@
             this.входToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_apikey = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_update = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_ifoprj = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cb_project = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -47,7 +48,7 @@
             this.ch_priority = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_assigned = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_updated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.mi_ifoprj = new System.Windows.Forms.ToolStripMenuItem();
+            this.lb_role = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -126,6 +127,14 @@
             this.mi_update.Size = new System.Drawing.Size(73, 20);
             this.mi_update.Text = "Обновить";
             this.mi_update.Click += new System.EventHandler(this.mi_update_Click);
+            // 
+            // mi_ifoprj
+            // 
+            this.mi_ifoprj.Enabled = false;
+            this.mi_ifoprj.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.mi_ifoprj.Name = "mi_ifoprj";
+            this.mi_ifoprj.Size = new System.Drawing.Size(75, 20);
+            this.mi_ifoprj.Text = "О проекте";
             // 
             // groupBox1
             // 
@@ -207,18 +216,23 @@
             // 
             this.ch_updated.Text = "Обновлено";
             // 
-            // mi_ifoprj
+            // lb_role
             // 
-            this.mi_ifoprj.Enabled = false;
-            this.mi_ifoprj.Name = "mi_ifoprj";
-            this.mi_ifoprj.Size = new System.Drawing.Size(75, 20);
-            this.mi_ifoprj.Text = "О проекте";
+            this.lb_role.AutoSize = true;
+            this.lb_role.Location = new System.Drawing.Point(247, 54);
+            this.lb_role.Name = "lb_role";
+            this.lb_role.Size = new System.Drawing.Size(88, 13);
+            this.lb_role.TabIndex = 3;
+            this.lb_role.Text = "Роль в проекте:";
+            this.lb_role.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lb_role.Visible = false;
             // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(554, 434);
+            this.Controls.Add(this.lb_role);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip);
@@ -260,6 +274,7 @@
         private System.Windows.Forms.ColumnHeader ch_assigned;
         private System.Windows.Forms.ColumnHeader ch_updated;
         private System.Windows.Forms.ToolStripMenuItem mi_ifoprj;
+        private System.Windows.Forms.Label lb_role;
 
     }
 }
