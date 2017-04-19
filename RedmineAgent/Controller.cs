@@ -16,13 +16,17 @@ namespace RedmineAgent
         public Action<string> apiKeyChanged;
         public Action<List<Project>,string> projectsUpdated;
         public Action<List<Issue>,string,string> issuesUpdated;
-       // int idName;
+        public Action<List<TrackerNew>, List<StatusNew>, List<IssuePrioriti>, List<Membership>, string> UpdateFormNewIssue;
+       
         
-
+        
         private List<Project> projects;
         private List<Issue> issues;
         private List<Membership> membership;
         private User users;
+        private List<TrackerNew> tracker;
+        private List<StatusNew> status;
+        private List<IssuePrioriti> issueprioriti;
       
       
         public void LoginApiKey(string apiKey)
@@ -94,27 +98,31 @@ namespace RedmineAgent
             {
                 try
                 {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://student-rm.exactpro.com/" + "issues.json?project_id=" + projectId);
+                    HttpWebRequest request;
+                    HttpWebResponse response;
+                    StreamReader streamReader;
+                    string jsonResult;
+                    request = (HttpWebRequest)WebRequest.Create("http://student-rm.exactpro.com/" + "issues.json?project_id=" + projectId);
                     request.Method = "GET";
                     request.Headers.Add("X-Redmine-API-Key", Properties.Settings.Default.api_key);
                     request.Accept = "application/json";
-                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                    StreamReader streamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
-                    string jsonResult = streamReader.ReadToEnd();
+                    response = (HttpWebResponse)request.GetResponse();
+                    streamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                    jsonResult = streamReader.ReadToEnd();
                     response.Close();
                     streamReader.Close();
                     issues = JsonConvert.DeserializeObject<Issues>(jsonResult).IssuesList;
-
-                    HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create("http://student-rm.exactpro.com/projects/" + projectId + "/memberships.json");
-                    request2.Method = "GET";
-                    request2.Headers.Add("X-Redmine-API-Key", Properties.Settings.Default.api_key);
-                    request2.Accept = "application/json";
-                    HttpWebResponse response2 = (HttpWebResponse)request2.GetResponse();
-                    StreamReader streamReader2 = new StreamReader(response2.GetResponseStream(), Encoding.UTF8);
-                    string jsonResult2 = streamReader2.ReadToEnd();
-                    response2.Close();
-                    streamReader2.Close();
-                    membership = JsonConvert.DeserializeObject<Memberships>(jsonResult2).MembershipsList;
+                    
+                    request = (HttpWebRequest)WebRequest.Create("http://student-rm.exactpro.com/projects/" + projectId + "/memberships.json");
+                    request.Method = "GET";
+                    request.Headers.Add("X-Redmine-API-Key", Properties.Settings.Default.api_key);
+                    request.Accept = "application/json";
+                    response = (HttpWebResponse)request.GetResponse();
+                    streamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                    jsonResult = streamReader.ReadToEnd();
+                    response.Close();
+                    streamReader.Close();
+                    membership = JsonConvert.DeserializeObject<Memberships>(jsonResult).MembershipsList;
                     string roles = "";
                     Membership rolesmember=null;
                     bool check = false;
@@ -149,18 +157,84 @@ namespace RedmineAgent
             }
         }
 
-        public void NewIssue()
+
+        public void InfoNewIssue()
         {
-               
+            if (CheckInternet.CheckTheInternet() == "Connected")
+            {
+                try
+                {
+                    HttpWebRequest request;
+                    HttpWebResponse response;
+                    StreamReader streamReader;
+                    string jsonResult;
+                    request = (HttpWebRequest)WebRequest.Create("http://student-rm.exactpro.com/trackers.json");
+                    request.Method = "GET";
+                    request.Headers.Add("X-Redmine-API-Key", Properties.Settings.Default.api_key);
+                    request.Accept = "application/json";
+                    response = (HttpWebResponse)request.GetResponse();
+                    streamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                    jsonResult = streamReader.ReadToEnd();
+                    response.Close();
+                    streamReader.Close();
+                    tracker = JsonConvert.DeserializeObject<Trackers>(jsonResult).TrackersList;
+
+                    request = (HttpWebRequest)WebRequest.Create("http://student-rm.exactpro.com/issue_statuses.json");
+                    request.Method = "GET";
+                    request.Headers.Add("X-Redmine-API-Key", Properties.Settings.Default.api_key);
+                    request.Accept = "application/json";
+                    response = (HttpWebResponse)request.GetResponse();
+                    streamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                    jsonResult = streamReader.ReadToEnd();
+                    response.Close();
+                    streamReader.Close();
+                    status = JsonConvert.DeserializeObject<Statues>(jsonResult).StatuesList;
+
+                    request = (HttpWebRequest)WebRequest.Create("http://student-rm.exactpro.com/enumerations/issue_priorities.json");
+                    request.Method = "GET";
+                    request.Headers.Add("X-Redmine-API-Key", Properties.Settings.Default.api_key);
+                    request.Accept = "application/json";
+                    response = (HttpWebResponse)request.GetResponse();
+                    streamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                    jsonResult = streamReader.ReadToEnd();
+                    response.Close();
+                    streamReader.Close();
+                    issueprioriti = JsonConvert.DeserializeObject<IssuePriorities>(jsonResult).IssuePrioritiesList;
+                    if (UpdateFormNewIssue != null)
+                        UpdateFormNewIssue(tracker, status, issueprioriti, membership, "noError");
+
+
+                }
+                catch
+                {
+                    issuesUpdated(null, "errorKey", null);
+                }
+            }
+            else
+            {
+                apiKeyChanged("errorInternet");
+            }
+
         }
+
+
 
         public User UserInfo()
         {
             return users;
         }
-        public List<Issue> IssueInfo()
+        public Issue IssueInfo(string projectid)
         {
-            return issues;
+            Issue infoissue = null;
+            foreach (Issue issu in issues)
+            {
+                if (issu.Subject==projectid)
+                {
+                    infoissue = issu;
+                    break;
+                }
+            }
+            return infoissue;
         }
         public Project ProjectInfo(int projectid)
         {
@@ -180,6 +254,51 @@ namespace RedmineAgent
         {
             return membership;
         }
+        public TrackerNew TrackerInfo(string track)
+        {
+            TrackerNew tracker_info = null;
+            foreach (TrackerNew tr in tracker)
+            {
+                if (tr.Name==track)
+                {
+                    tracker_info = tr;
+                    break;
+                }
+
+            }
+            return tracker_info;
+        }
+
+        public StatusNew StatusInfo(string stat)
+        {
+            StatusNew status_info = null;
+            foreach (StatusNew st in status)
+            {
+                if (st.Name == stat)
+                {
+                    status_info = st;
+                    break;
+                }
+
+            }
+            return status_info;
+        }
+        public IssuePrioriti PriorityInfo(string prior)
+        {
+            IssuePrioriti priority_info = null;
+            foreach (IssuePrioriti pr in issueprioriti)
+            {
+                if (pr.Name == prior)
+                {
+                    priority_info = pr;
+                    break;
+                }
+
+            }
+            return priority_info;
+        }
+
+
        
 
     }

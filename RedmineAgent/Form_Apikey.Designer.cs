@@ -88,6 +88,7 @@
             this.tbapikey.Name = "tbapikey";
             this.tbapikey.Size = new System.Drawing.Size(287, 20);
             this.tbapikey.TabIndex = 1;
+            this.tbapikey.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tbapikey_KeyUp);
             // 
             // label1
             // 

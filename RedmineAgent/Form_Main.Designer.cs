@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_newissue = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,9 +49,15 @@
             this.ch_assigned = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_updated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lb_role = new System.Windows.Forms.Label();
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tm_infoIssue = new System.Windows.Forms.ToolStripMenuItem();
+            this.tm_status = new System.Windows.Forms.ToolStripMenuItem();
+            this.tm_priority = new System.Windows.Forms.ToolStripMenuItem();
+            this.tm_apointed = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -82,6 +89,7 @@
             this.mi_newissue.Name = "mi_newissue";
             this.mi_newissue.Size = new System.Drawing.Size(216, 22);
             this.mi_newissue.Text = "Новая задача";
+            this.mi_newissue.Click += new System.EventHandler(this.mi_newissue_Click);
             // 
             // mi_info
             // 
@@ -175,12 +183,13 @@
             this.ch_priority,
             this.ch_assigned,
             this.ch_updated});
-            this.lv_issue.Location = new System.Drawing.Point(7, 20);
+            this.lv_issue.Location = new System.Drawing.Point(7, 19);
             this.lv_issue.Name = "lv_issue";
             this.lv_issue.Size = new System.Drawing.Size(516, 309);
             this.lv_issue.TabIndex = 0;
             this.lv_issue.UseCompatibleStateImageBehavior = false;
             this.lv_issue.View = System.Windows.Forms.View.Details;
+            this.lv_issue.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lv_issue_MouseDown);
             // 
             // ch_subject
             // 
@@ -219,6 +228,42 @@
             this.lb_role.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lb_role.Visible = false;
             // 
+            // contextMenuStrip
+            // 
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tm_infoIssue,
+            this.tm_status,
+            this.tm_priority,
+            this.tm_apointed});
+            this.contextMenuStrip.Name = "contextMenuStrip";
+            this.contextMenuStrip.Size = new System.Drawing.Size(198, 92);
+            // 
+            // tm_infoIssue
+            // 
+            this.tm_infoIssue.Enabled = false;
+            this.tm_infoIssue.Name = "tm_infoIssue";
+            this.tm_infoIssue.Size = new System.Drawing.Size(197, 22);
+            this.tm_infoIssue.Text = "Информация о задаче";
+            this.tm_infoIssue.Click += new System.EventHandler(this.tm_infoIssue_Click);
+            // 
+            // tm_status
+            // 
+            this.tm_status.Name = "tm_status";
+            this.tm_status.Size = new System.Drawing.Size(197, 22);
+            this.tm_status.Text = "Статус";
+            // 
+            // tm_priority
+            // 
+            this.tm_priority.Name = "tm_priority";
+            this.tm_priority.Size = new System.Drawing.Size(197, 22);
+            this.tm_priority.Text = "Приоритет";
+            // 
+            // tm_apointed
+            // 
+            this.tm_apointed.Name = "tm_apointed";
+            this.tm_apointed.Size = new System.Drawing.Size(197, 22);
+            this.tm_apointed.Text = "Назначена";
+            // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -239,6 +284,7 @@
             this.menuStrip.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
+            this.contextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -266,6 +312,11 @@
         private System.Windows.Forms.ColumnHeader ch_updated;
         private System.Windows.Forms.ToolStripMenuItem mi_ifoprj;
         private System.Windows.Forms.Label lb_role;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem tm_status;
+        private System.Windows.Forms.ToolStripMenuItem tm_priority;
+        private System.Windows.Forms.ToolStripMenuItem tm_apointed;
+        private System.Windows.Forms.ToolStripMenuItem tm_infoIssue;
 
     }
 }

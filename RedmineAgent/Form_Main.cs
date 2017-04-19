@@ -125,11 +125,11 @@ namespace RedmineAgent
 
         private void Form_Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            var Result2 = MessageBox.Show("Вы действительно хотите выйти?", "Внимание!", MessageBoxButtons.YesNo);
-            if (Result2 == DialogResult.No)
-            {
-                e.Cancel = true;
-            }
+            //var Result2 = MessageBox.Show("Вы действительно хотите выйти?", "Внимание!", MessageBoxButtons.YesNo);
+            //if (Result2 == DialogResult.No)
+            //{
+            //    e.Cancel = true;
+            //}
         }
 
         private void mi_update_Click(object sender, EventArgs e)
@@ -152,6 +152,7 @@ namespace RedmineAgent
                 lv_issue.Items.Clear();
                 mi_ifoprj.Enabled = false;
                 lb_role.Visible = false;
+                mi_newissue.Enabled = false;
             }
             else
             {
@@ -167,26 +168,63 @@ namespace RedmineAgent
             Project project = controller.ProjectInfo(idProject[cb_project.SelectedIndex - 1]);
             membershipslist = controller.MembershipInfo();
 
-            string manager = "";
-            string developer = "";
+            string manager = "Менеджеры: ";
+            string developer = "Разработчики: ";
             Membership roles = null;
             foreach (Membership mb in membershipslist)
             {
                 roles = mb;
-                foreach (Role rl in roles.Roles)
+                if (mb.Member != null)
                 {
-                    if (rl.Name == "Manager")
+                    foreach (Role rl in roles.Roles)
+                    {
+                        if (rl.Name == "Manager")
 
-                        manager = manager + mb.Member.Name;
+                            manager = manager + mb.Member.Name + " ";
 
-                    else if (rl.Name == "Developer")
-                        developer =developer+ mb.Member.Name;
+                        else if (rl.Name == "Developer")
+                            developer = developer + mb.Member.Name + " ";
 
+                    }
                 }
             }
-            MessageBox.Show(" id: " + project.Id + "\n\r" + " Название проекта: " + project.Name + "\n\r " + "Статус: " + project.Status + "\n\r" + " Идентификатор: " + project.Indentifier + "\n\r" + " Публичный: " + project.IsPublic + "\n\r" + " Дата изменения: " + project.UpdatedOn + "\n\r" + " Дата создания: " + project.CreatedOn + "\n\r" + " Менеджеры: " + manager + "\n\r" + " Разработчики: " + developer,"Информация о проекте!");
+            MessageBox.Show("id: " + project.Id + "\n\r" + "Название проекта: " + project.Name + "\n\r" + "Статус: " + project.Status + "\n\r" + "Идентификатор: " + project.Indentifier + "\n\r" + "Публичный: " + project.IsPublic + "\n\r" + "Дата изменения: " + project.UpdatedOn + "\n\r" + "Дата создания: " + project.CreatedOn + "\n\r"  + manager + "\n\r" + developer,"Информация о проекте!");
 
         }
+
+        private void lv_issue_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && lv_issue.SelectedIndices.Count!=0)
+            {
+                tm_infoIssue.Enabled = true;
+                contextMenuStrip.Show(Cursor.Position);
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                tm_infoIssue.Enabled = false;
+                contextMenuStrip.Show(Cursor.Position);
+            }
+
+        }
+
+        private void tm_infoIssue_Click(object sender, EventArgs e)
+        {
+            string assigned="";
+            Issue issue = controller.IssueInfo(lv_issue.FocusedItem.Text);
+            if (issue.AssignedTo == null)
+                assigned="";
+            else
+               assigned = issue.AssignedTo.Name;
+               
+            MessageBox.Show("Название проекта: " + issue.Project.Name + "\n\r" + "Название задачи: " + issue.Subject + "\n\r" + "Трекер: " + issue.Tracker.Name + "\n\r" + "Статус: " + issue.Status.Name + "\n\r" + "Приоритет: " + issue.Priority.Name + "\n\r" + "Автор: " + issue.Author.Name + "\n\r" + "Назначена: " + assigned + "\n\r" + "Описание: " + issue.Description + "\n\r" + "Обновлено " + issue.CreatedOn,"Информация о задаче!");
+        }
+
+        private void mi_newissue_Click(object sender, EventArgs e)
+        {
+            new Form_NewIssue(idProject[cb_project.SelectedIndex - 1]).ShowDialog();
+        }
+
+        
     }
 }
 
