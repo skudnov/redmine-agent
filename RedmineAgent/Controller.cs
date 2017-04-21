@@ -17,7 +17,8 @@ namespace RedmineAgent
         public Action<List<Project>,string> projectsUpdated;
         public Action<List<Issue>,string,string> issuesUpdated;
         public Action<List<TrackerNew>, List<StatusNew>, List<IssuePrioriti>, List<Membership>, string> UpdateFormNewIssue;
-       
+        public Action<string> issueLoading;
+        public Action<string>UpdateStatus;
         
         
         private List<Project> projects;
@@ -27,6 +28,7 @@ namespace RedmineAgent
         private List<TrackerNew> tracker;
         private List<StatusNew> status;
         private List<IssuePrioriti> issueprioriti;
+        
       
       
         public void LoginApiKey(string apiKey)
@@ -153,7 +155,8 @@ namespace RedmineAgent
             }
             else
             {
-                apiKeyChanged("errorInternet");
+                issuesUpdated(null, "errorInternet" , null);
+               
             }
         }
 
@@ -207,12 +210,13 @@ namespace RedmineAgent
                 }
                 catch
                 {
-                    issuesUpdated(null, "errorKey", null);
+                    UpdateFormNewIssue(null, null, null, null, "errorKey");
+                 
                 }
             }
             else
             {
-                apiKeyChanged("errorInternet");
+                UpdateFormNewIssue(null, null, null, null, "errorInternet");
             }
 
         }
@@ -298,8 +302,67 @@ namespace RedmineAgent
             return priority_info;
         }
 
+        public void LoadingIssue(string jsonResult)
+        {
+            if (CheckInternet.CheckTheInternet() == "Connected")
+            {
+                try
+                {
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://student-rm.exactpro.com/issues.json");
+                    request.Method = "POST";
+                    request.Headers.Add("X-Redmine-API-Key", Properties.Settings.Default.api_key);
+                    request.ContentType = "application/json";
+                    StreamWriter streamWriter = new StreamWriter(request.GetRequestStream());
+                    streamWriter.Write(jsonResult);
+                    streamWriter.Flush();
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                    streamWriter.Close();
+                    response.Close();
+                    if (issueLoading != null)
+                        issueLoading("noError");
+                }
+                catch
+                {
+                    issueLoading("errorKey");
+                }
+            }
+            else
+            {
+                issueLoading("errorInternet");
+                
+            }
+        }
 
-       
+        public void StatusUpdate(string jsonResult,int issueid)
+        {
+            if (CheckInternet.CheckTheInternet() == "Connected")
+            {
+                try
+                {
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://student-rm.exactpro.com/issues/"+issueid+".json");
+                    request.Method = "PUT";
+                    request.Headers.Add("X-Redmine-API-Key", Properties.Settings.Default.api_key);
+                    request.ContentType = "application/json";
+                    StreamWriter streamWriter = new StreamWriter(request.GetRequestStream());
+                    streamWriter.Write(jsonResult);
+                    streamWriter.Flush();
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                    streamWriter.Close();
+                    response.Close();
+                    if (UpdateStatus != null)
+                        UpdateStatus("noError");
+                }
+                catch
+                {
+                    UpdateStatus("errorKey");
+                }
+            }
+            else
+            {
+                UpdateStatus("errorInternet");
+
+            }
+        }
 
     }
 }

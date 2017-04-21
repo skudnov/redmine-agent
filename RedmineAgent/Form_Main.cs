@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using RedmineAgent.Models;
+using Newtonsoft.Json;
 
 namespace RedmineAgent
 {
@@ -11,6 +12,7 @@ namespace RedmineAgent
         private Controller controller;
         public List<int> idProject = new List<int>();
         public List<Membership> membershipslist = new List<Membership>();
+       
 
         public Form_Main()
         {
@@ -20,9 +22,26 @@ namespace RedmineAgent
             controller.projectsUpdated += projectsUpdated;
             controller.issuesUpdated += issuesUpdated;
             controller.apiKeyChanged += apiKeyChanged;
+            controller.UpdateStatus += updateStatus;
             controller.UpdateProject();
         }
+        private void updateStatus(string check)
+        {
 
+            if (check == "noError")
+            {
+                controller.UpdateIssue(cb_project.SelectedIndex - 1);
+            }
+            else if (check == "errorKey")
+            {
+                MessageBox.Show("Введенный api-key неправильный. Повторите ввод!", "Ошибка Api-key");
+                new Form_Apikey().ShowDialog();
+            }
+            else if (check == "errorInternet")
+            {
+                MessageBox.Show("Проверьте подключение к интернету!", "Ошибка");
+            }
+        }
         private void apiKeyChanged(string check)
         {
             if (check == "noError")
@@ -61,6 +80,7 @@ namespace RedmineAgent
 
         public void issuesUpdated(List<Issue> issues, string check, string roles)
         {
+            lv_issue.Items.Clear();
             if (check == "noError")
             {
                 lb_role.Visible = true;
@@ -68,10 +88,29 @@ namespace RedmineAgent
                 {
                     lb_role.Text = "Роль в проекте: Менеджер";
                     mi_newissue.Enabled = true;
+                    
+
+                    tm_new.Visible = true;
+                    tm_inProgress.Visible = true;
+                    tm_Resolved.Visible = true;
+                    tm_feedblack.Visible = true;
+                    tm_closed.Visible = true;
+                    tm_rejected.Visible = true;
+
+                   
                 }
                 else if (roles == "Developer")
                 {
                     lb_role.Text = "Роль в проекте: Разработчик";
+                    tm_inProgress.Visible = true;
+                    tm_Resolved.Visible = true;
+                    tm_feedblack.Visible = true;
+                    
+                    tm_new.Visible = false;
+                    tm_closed.Visible = false;
+                    tm_rejected.Visible = false;
+                    
+
                 }
                 else if (roles == "Reporter")
                 {
@@ -80,6 +119,12 @@ namespace RedmineAgent
                 else if (roles == null)
                 {
                     lb_role.Text = "Вы не состоите в проекте!";
+                    tm_new.Visible = false;
+                    tm_inProgress.Visible = false;
+                    tm_Resolved.Visible = false;
+                    tm_feedblack.Visible = false;
+                    tm_closed.Visible = false;
+                    tm_rejected.Visible = false;
                 }
                 else
                 {
@@ -197,11 +242,19 @@ namespace RedmineAgent
             if (e.Button == MouseButtons.Right && lv_issue.SelectedIndices.Count!=0)
             {
                 tm_infoIssue.Enabled = true;
+                tm_status.Enabled = true;
+                tm_tracker.Enabled = true;
+                tm_priority.Enabled = true;
+                tm_apointed.Enabled = true;
                 contextMenuStrip.Show(Cursor.Position);
             }
             else if (e.Button == MouseButtons.Right)
             {
+                tm_status.Enabled = false;
                 tm_infoIssue.Enabled = false;
+                tm_tracker.Enabled = false;
+                tm_priority.Enabled = false;
+                tm_apointed.Enabled = false;
                 contextMenuStrip.Show(Cursor.Position);
             }
 
@@ -215,7 +268,6 @@ namespace RedmineAgent
                 assigned="";
             else
                assigned = issue.AssignedTo.Name;
-               
             MessageBox.Show("Название проекта: " + issue.Project.Name + "\n\r" + "Название задачи: " + issue.Subject + "\n\r" + "Трекер: " + issue.Tracker.Name + "\n\r" + "Статус: " + issue.Status.Name + "\n\r" + "Приоритет: " + issue.Priority.Name + "\n\r" + "Автор: " + issue.Author.Name + "\n\r" + "Назначена: " + assigned + "\n\r" + "Описание: " + issue.Description + "\n\r" + "Обновлено " + issue.CreatedOn,"Информация о задаче!");
         }
 
@@ -223,6 +275,114 @@ namespace RedmineAgent
         {
             new Form_NewIssue(idProject[cb_project.SelectedIndex - 1]).ShowDialog();
         }
+
+        private void tm_new_Click(object sender, EventArgs e)
+        {
+            NewIssue newissue = new NewIssue();
+            newissue.StatusId = 1;
+            ResultJson(newissue);
+        }
+        public void ResultJson(NewIssue newissue)
+        {
+            Issue issue = controller.IssueInfo(lv_issue.FocusedItem.Text);
+            int idissue = issue.Id;
+            string jsonResult = JsonConvert.SerializeObject(new NewIssues() { NewIssue = newissue }, Formatting.Indented, new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore });
+           
+            controller.StatusUpdate(jsonResult,idissue);
+        }
+
+        private void tm_inProgress_Click(object sender, EventArgs e)
+        {
+            NewIssue newissue = new NewIssue();
+            newissue.StatusId = 2;
+            ResultJson(newissue);
+        }
+
+        private void tm_Resolved_Click(object sender, EventArgs e)
+        {
+            NewIssue newissue = new NewIssue();
+            newissue.StatusId = 3;
+            ResultJson(newissue);
+        }
+
+        private void tm_feedblack_Click(object sender, EventArgs e)
+        {
+            NewIssue newissue = new NewIssue();
+            newissue.StatusId = 4;
+            ResultJson(newissue);
+        }
+
+        private void tm_closed_Click(object sender, EventArgs e)
+        {
+            NewIssue newissue = new NewIssue();
+            newissue.StatusId = 5;
+            ResultJson(newissue);
+        }
+
+        private void tm_rejected_Click(object sender, EventArgs e)
+        {
+            NewIssue newissue = new NewIssue();
+            newissue.StatusId = 6;
+            ResultJson(newissue);
+        }
+
+        private void tm_bbug_Click(object sender, EventArgs e)
+        {
+            NewIssue newissue = new NewIssue();
+            newissue.TrackerId = 1;
+            ResultJson(newissue);
+        }
+
+        private void tm_feature_Click(object sender, EventArgs e)
+        {
+            NewIssue newissue = new NewIssue();
+            newissue.TrackerId = 2;
+            ResultJson(newissue);
+        }
+
+        private void tm_suppurt_Click(object sender, EventArgs e)
+        {
+            NewIssue newissue = new NewIssue();
+            newissue.TrackerId = 3;
+            ResultJson(newissue);
+        }
+
+        private void tm_immediate_Click(object sender, EventArgs e)
+        {
+            NewIssue newissue = new NewIssue();
+            newissue.PriorityId = 5;
+            ResultJson(newissue);
+        }
+
+        private void tm_urgent_Click(object sender, EventArgs e)
+        {
+            NewIssue newissue = new NewIssue();
+            newissue.PriorityId = 4;
+            ResultJson(newissue);
+        }
+
+        private void tm_high_Click(object sender, EventArgs e)
+        {
+            NewIssue newissue = new NewIssue();
+            newissue.PriorityId = 3;
+            ResultJson(newissue);
+        }
+
+        private void tm_normal_Click(object sender, EventArgs e)
+        {
+            NewIssue newissue = new NewIssue();
+            newissue.PriorityId = 2;
+            ResultJson(newissue);
+        }
+
+        private void tm_low_Click(object sender, EventArgs e)
+        {
+            NewIssue newissue = new NewIssue();
+            newissue.PriorityId = 1;
+            ResultJson(newissue);
+        }
+
+       
 
         
     }
