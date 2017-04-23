@@ -17,6 +17,7 @@ namespace RedmineAgent
         private Controller controller;
         int projectid;
         public List<Membership> membershipslist = new List<Membership>();
+
         public Form_NewIssue(int projectid)
         {
             this.projectid = projectid;
@@ -26,30 +27,35 @@ namespace RedmineAgent
             controller.InfoNewIssue();
             cb_trackers.SelectedIndex = 0;
             cb_status.SelectedIndex = 0;
-            //cb_readiness.SelectedIndex = 0;
             cb_priority.SelectedIndex = 0;
             cb_assigned.SelectedIndex = 0;
             controller.issueLoading += UpdateIssueNew;
-
         }
+
         private void UpdateIssueNew(string cheсk)
         {
             if (cheсk == "noError")
             {
                 controller.UpdateIssue(projectid);
                 this.Close();
+
             }
             else if (cheсk == "errorKey")
             {
+                bt_newissue.Enabled = true;
+                bt_cancel.Enabled = true;
                 MessageBox.Show("Введенный api-key неправильный. Повторите ввод!", "Ошибка Api-key");
                 new Form_Apikey().ShowDialog();
 
             }
             else if (cheсk == "errorInternet")
             {
+                bt_newissue.Enabled = true;
+                bt_cancel.Enabled = true;
                 MessageBox.Show("Проверьте подключение к интернету!", "Ошибка");
             }
         }
+
         private void UpdateFormNewIssue(List<TrackerNew> trackers, List<StatusNew> status, List<IssuePrioriti> issueprioriti, List<Membership> membership, string check)
         {
             if (check == "noError")
@@ -76,19 +82,21 @@ namespace RedmineAgent
                         cb_checkmember.Items.Add(mb.Member.Name);
                     }
                 }
-
             }
             else
                 if (check == "errorKey")
                 {
+                    bt_newissue.Enabled = true;
+                    bt_cancel.Enabled = true;
                     MessageBox.Show("Введенный api-key неправильный. Повторите ввод!", "Ошибка Api-key");
                     new Form_Apikey().ShowDialog();
                 }
                 else if (check == "errorInternet")
                 {
+                    bt_newissue.Enabled = true;
+                    bt_cancel.Enabled = true;
                     MessageBox.Show("Проверьте подключение к интернету!", "Ошибка");
                 }
-
         }
 
         private void bt_cancel_Click(object sender, EventArgs e)
@@ -98,6 +106,8 @@ namespace RedmineAgent
 
         private void bt_newissue_Click(object sender, EventArgs e)
         {
+            bt_newissue.Enabled = false;
+            bt_cancel.Enabled = false;
             if (tb_topic != null)
             {
                 NewIssue newissue = new NewIssue();
@@ -125,10 +135,9 @@ namespace RedmineAgent
                     {
                         if (mb.Member.Name == cb_assigned.Text)
                         {
-                            newissue.AssignedToId = mb.Member.Id;
+                            newissue.AssignedToId = Convert.ToString(mb.Member.Id);
                             break;
                         }
-
                     }
                 //Публичная
                 newissue.IsPrivate = cb_private.Checked;
@@ -146,39 +155,20 @@ namespace RedmineAgent
                             if (mb.Member.Name == check)
                             {
                                 memberis.Add(Convert.ToString(mb.Member.Id));
-
                             }
                         }
-                    } 
+                    }
                     newissue.WatcherUserIds = memberis;
 
                 }
-               
                 //Преобразуем строку в формат json
                 string jsonResult = JsonConvert.SerializeObject(new NewIssues() { NewIssue = newissue }, Formatting.Indented, new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore });
                 controller.LoadingIssue(jsonResult);
-
             }
             else
             {
                 MessageBox.Show("Введите тему задачи!", "Ошибка");
             }
-
-
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

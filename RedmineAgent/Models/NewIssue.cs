@@ -7,17 +7,6 @@ using Newtonsoft.Json;
 
 namespace RedmineAgent.Models
 {
-    public class NewStatus
-    {
-        [JsonProperty(PropertyName = "status_id")]
-        public int StatusId { get; set; } 
-    }
-    public class NewStatues
-    {
-        [JsonProperty(PropertyName = "issue")]
-        public NewStatus NewIssue { get; set; }
-    }
-
     public class NewIssues
     {
         [JsonProperty(PropertyName = "issue")]
@@ -38,7 +27,7 @@ namespace RedmineAgent.Models
        [JsonProperty(PropertyName = "description")]
        public string Description { get; set; }
        [JsonProperty(PropertyName = "assigned_to_id")]
-       public int AssignedToId { get; set; }
+       public string AssignedToId { get; set; }
        [JsonProperty(PropertyName = "watcher_user_ids")]
        public List<string> WatcherUserIds { get; set; }///?????
        [JsonProperty(PropertyName = "is_private")]

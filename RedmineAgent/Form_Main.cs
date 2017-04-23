@@ -12,6 +12,7 @@ namespace RedmineAgent
         private Controller controller;
         public List<int> idProject = new List<int>();
         public List<Membership> membershipslist = new List<Membership>();
+      
        
 
         public Form_Main()
@@ -23,14 +24,31 @@ namespace RedmineAgent
             controller.issuesUpdated += issuesUpdated;
             controller.apiKeyChanged += apiKeyChanged;
             controller.UpdateStatus += updateStatus;
+            controller.OneIssueDelete += deleteIssue;
             controller.UpdateProject();
+        }
+        private void deleteIssue(string check)
+        {
+            if (check == "noError")
+            {
+                controller.UpdateIssue(idProject[cb_project.SelectedIndex - 1]);
+            }
+            else if (check == "errorKey")
+            {
+                MessageBox.Show("Введенный api-key неправильный. Повторите ввод!", "Ошибка Api-key");
+                new Form_Apikey().ShowDialog();
+            }
+            else if (check == "errorInternet")
+            {
+                MessageBox.Show("Проверьте подключение к интернету!", "Ошибка");
+            }
         }
         private void updateStatus(string check)
         {
 
             if (check == "noError")
             {
-                controller.UpdateIssue(cb_project.SelectedIndex - 1);
+                controller.UpdateIssue(idProject[cb_project.SelectedIndex - 1]);
             }
             else if (check == "errorKey")
             {
@@ -51,6 +69,8 @@ namespace RedmineAgent
                 mi_info.Enabled = true;
                 controller.UpdateProject();
             }
+
+            
         }
 
         public void projectsUpdated(List<Project> projects, string check)
@@ -66,6 +86,7 @@ namespace RedmineAgent
                     cb_project.Items.Add(project.Name);
                     idProject.Add(project.Id);
                 }
+               
             }
             else if (check == "errorKey")
             {
@@ -78,53 +99,63 @@ namespace RedmineAgent
             }
         }
 
-        public void issuesUpdated(List<Issue> issues, string check, string roles)
+        public void issuesUpdated(List<Issue> issues, string check, string roles,List<StatusNew> statues,List<IssuePrioriti> priority,List<TrackerNew> tracker)
         {
-            lv_issue.Items.Clear();
+            
             if (check == "noError")
             {
+                membershipslist = controller.MembershipInfo();
+                lv_issue.Items.Clear();
+                tm_status.DropDown.Items.Clear();
+                tm_priority.DropDown.Items.Clear();
+                tm_apointed.DropDown.Items.Clear();
+                tm_tracker.DropDown.Items.Clear();
+
+                foreach (TrackerNew tr in tracker)
+                {
+                    tm_tracker.DropDownItems.Add(tr.Name);
+                }
+                foreach (IssuePrioriti ip in priority)
+                {
+                   tm_priority.DropDownItems.Add(ip.Name);
+                   
+                }
+                tm_apointed.DropDownItems.Add("Никому");
+                foreach (Membership mem in membershipslist)
+                {
+                    if (mem.Member!=null)
+                    tm_apointed.DropDownItems.Add(mem.Member.Name);
+                }
                 lb_role.Visible = true;
                 if (roles == "Manager")
                 {
+                 foreach (StatusNew st in statues)
+                {
+                    tm_status.DropDownItems.Add(st.Name);
+                }
                     lb_role.Text = "Роль в проекте: Менеджер";
                     mi_newissue.Enabled = true;
-                    
-
-                    tm_new.Visible = true;
-                    tm_inProgress.Visible = true;
-                    tm_Resolved.Visible = true;
-                    tm_feedblack.Visible = true;
-                    tm_closed.Visible = true;
-                    tm_rejected.Visible = true;
+                    tm_delete.Enabled = true;
 
                    
                 }
                 else if (roles == "Developer")
                 {
-                    lb_role.Text = "Роль в проекте: Разработчик";
-                    tm_inProgress.Visible = true;
-                    tm_Resolved.Visible = true;
-                    tm_feedblack.Visible = true;
-                    
-                    tm_new.Visible = false;
-                    tm_closed.Visible = false;
-                    tm_rejected.Visible = false;
+                      foreach (StatusNew st in statues)
+                {
+                       if (st.Name=="In Progress" || st.Name=="Resolved" || st.Name=="Feedback")
+                    tm_status.DropDownItems.Add(st.Name);
+
+                }
+
+                    lb_role.Text = "Роль в проекте: Разработчик";                    
+                    tm_delete.Enabled = false;
                     
 
                 }
                 else if (roles == "Reporter")
                 {
                     lb_role.Text = "Роль в проекте: Репортер";
-                }
-                else if (roles == null)
-                {
-                    lb_role.Text = "Вы не состоите в проекте!";
-                    tm_new.Visible = false;
-                    tm_inProgress.Visible = false;
-                    tm_Resolved.Visible = false;
-                    tm_feedblack.Visible = false;
-                    tm_closed.Visible = false;
-                    tm_rejected.Visible = false;
                 }
                 else
                 {
@@ -137,7 +168,6 @@ namespace RedmineAgent
                     lvi.SubItems.Add(issue.Tracker.Name);
                     lvi.SubItems.Add(issue.Status.Name);
                     lvi.SubItems.Add(issue.Priority.Name);
-                    //  lvi.SubItems.Add();
                     if (issue.AssignedTo == null)
                         lvi.SubItems.Add("(не назначен)");
                     else
@@ -145,6 +175,8 @@ namespace RedmineAgent
                     lvi.SubItems.Add(issue.UpdatedOn.ToShortDateString());
                     lv_issue.Items.Add(lvi);
                 }
+
+                 
             }
             else if (check == "errorKey")
             {
@@ -202,7 +234,6 @@ namespace RedmineAgent
             else
             {
                 lv_issue.Items.Clear();
-                //     string projectName = cb_project.SelectedItem.ToString();
                 controller.UpdateIssue(idProject[cb_project.SelectedIndex - 1]);
                 mi_ifoprj.Enabled = true;
             }
@@ -212,6 +243,7 @@ namespace RedmineAgent
         {
             Project project = controller.ProjectInfo(idProject[cb_project.SelectedIndex - 1]);
             membershipslist = controller.MembershipInfo();
+            
 
             string manager = "Менеджеры: ";
             string developer = "Разработчики: ";
@@ -237,29 +269,6 @@ namespace RedmineAgent
 
         }
 
-        private void lv_issue_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right && lv_issue.SelectedIndices.Count!=0)
-            {
-                tm_infoIssue.Enabled = true;
-                tm_status.Enabled = true;
-                tm_tracker.Enabled = true;
-                tm_priority.Enabled = true;
-                tm_apointed.Enabled = true;
-                contextMenuStrip.Show(Cursor.Position);
-            }
-            else if (e.Button == MouseButtons.Right)
-            {
-                tm_status.Enabled = false;
-                tm_infoIssue.Enabled = false;
-                tm_tracker.Enabled = false;
-                tm_priority.Enabled = false;
-                tm_apointed.Enabled = false;
-                contextMenuStrip.Show(Cursor.Position);
-            }
-
-        }
-
         private void tm_infoIssue_Click(object sender, EventArgs e)
         {
             string assigned="";
@@ -276,12 +285,6 @@ namespace RedmineAgent
             new Form_NewIssue(idProject[cb_project.SelectedIndex - 1]).ShowDialog();
         }
 
-        private void tm_new_Click(object sender, EventArgs e)
-        {
-            NewIssue newissue = new NewIssue();
-            newissue.StatusId = 1;
-            ResultJson(newissue);
-        }
         public void ResultJson(NewIssue newissue)
         {
             Issue issue = controller.IssueInfo(lv_issue.FocusedItem.Text);
@@ -289,96 +292,106 @@ namespace RedmineAgent
             string jsonResult = JsonConvert.SerializeObject(new NewIssues() { NewIssue = newissue }, Formatting.Indented, new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore });
            
             controller.StatusUpdate(jsonResult,idissue);
+        }      
+
+        private void tm_delete_Click(object sender, EventArgs e)
+        {
+            Issue issue = controller.IssueInfo(lv_issue.FocusedItem.Text);
+            int idissue = issue.Id;
+            controller.DeleteIssue(idissue);
         }
 
-        private void tm_inProgress_Click(object sender, EventArgs e)
+        private void lv_issue_MouseClick(object sender, MouseEventArgs e)
         {
+
+            if (e.Button == MouseButtons.Right && lv_issue.SelectedIndices.Count != 0)
+            {
+                 Issue issue = controller.IssueInfo(lv_issue.FocusedItem.Text);
+                 membershipslist = controller.MembershipInfo();
+                tm_infoIssue.Enabled = true;
+                tm_status.Enabled = true;
+                tm_tracker.Enabled = true;
+                tm_priority.Enabled = true;
+                tm_apointed.Enabled = true;
+                foreach (ToolStripMenuItem mb in tm_priority.DropDown.Items)             
+                        mb.Enabled = true;
+
+                foreach (ToolStripMenuItem mb in tm_status.DropDown.Items)
+                        mb.Enabled = true;
+
+                foreach (ToolStripMenuItem mb in tm_apointed.DropDown.Items)
+                    mb.Enabled = true;
+
+                foreach (ToolStripMenuItem mb in tm_tracker.DropDown.Items)
+                    mb.Enabled = true;
+
+                foreach (ToolStripMenuItem mb in tm_priority.DropDown.Items)
+                if(mb.Text == issue.Priority.Name)
+                    mb.Enabled = false;
+
+                foreach (ToolStripMenuItem mb in tm_status.DropDown.Items)
+                    if (mb.Text == issue.Status.Name)
+                        mb.Enabled = false;
+
+                foreach (ToolStripMenuItem mb in tm_apointed.DropDown.Items)
+                    if (issue.AssignedTo != null)
+                    {
+                        if (mb.Text == issue.AssignedTo.Name)
+                            mb.Enabled = false;
+                    }
+                    else
+                        if (mb.Text == "Никому")
+                        {
+                            mb.Enabled = false;
+                            break;
+                        }
+
+                foreach (ToolStripMenuItem mb in tm_tracker.DropDown.Items)
+                    if (mb.Text == issue.Tracker.Name)
+                    mb.Enabled = false;
+                contextMenuStrip.Show(Cursor.Position);
+            }
+        }
+
+        private void tm_status_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            StatusNew status = controller.StatusInfo(e.ClickedItem.Text);
             NewIssue newissue = new NewIssue();
-            newissue.StatusId = 2;
+            newissue.StatusId = status.Id;
             ResultJson(newissue);
         }
 
-        private void tm_Resolved_Click(object sender, EventArgs e)
+        private void tm_priority_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
+            IssuePrioriti priority = controller.PriorityInfo(e.ClickedItem.Text);
             NewIssue newissue = new NewIssue();
-            newissue.StatusId = 3;
+            newissue.PriorityId = priority.Id;
             ResultJson(newissue);
         }
 
-        private void tm_feedblack_Click(object sender, EventArgs e)
+        private void tm_apointed_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            NewIssue newissue = new NewIssue();
-            newissue.StatusId = 4;
+               NewIssue newissue = new NewIssue();
+            membershipslist = controller.MembershipInfo();
+           
+            if(e.ClickedItem.Text=="Никому")
+            {
+              newissue.AssignedToId=" ";   
+            }
+            else
+               foreach (Membership mb in membershipslist)
+            {
+               if (e.ClickedItem.Text == mb.Member.Name)
+                   newissue.AssignedToId = Convert.ToString(mb.Member.Id);
+            }
             ResultJson(newissue);
         }
 
-        private void tm_closed_Click(object sender, EventArgs e)
+        private void tm_tracker_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
+            TrackerNew tracker = controller.TrackerInfo(e.ClickedItem.Text);
             NewIssue newissue = new NewIssue();
-            newissue.StatusId = 5;
-            ResultJson(newissue);
-        }
-
-        private void tm_rejected_Click(object sender, EventArgs e)
-        {
-            NewIssue newissue = new NewIssue();
-            newissue.StatusId = 6;
-            ResultJson(newissue);
-        }
-
-        private void tm_bbug_Click(object sender, EventArgs e)
-        {
-            NewIssue newissue = new NewIssue();
-            newissue.TrackerId = 1;
-            ResultJson(newissue);
-        }
-
-        private void tm_feature_Click(object sender, EventArgs e)
-        {
-            NewIssue newissue = new NewIssue();
-            newissue.TrackerId = 2;
-            ResultJson(newissue);
-        }
-
-        private void tm_suppurt_Click(object sender, EventArgs e)
-        {
-            NewIssue newissue = new NewIssue();
-            newissue.TrackerId = 3;
-            ResultJson(newissue);
-        }
-
-        private void tm_immediate_Click(object sender, EventArgs e)
-        {
-            NewIssue newissue = new NewIssue();
-            newissue.PriorityId = 5;
-            ResultJson(newissue);
-        }
-
-        private void tm_urgent_Click(object sender, EventArgs e)
-        {
-            NewIssue newissue = new NewIssue();
-            newissue.PriorityId = 4;
-            ResultJson(newissue);
-        }
-
-        private void tm_high_Click(object sender, EventArgs e)
-        {
-            NewIssue newissue = new NewIssue();
-            newissue.PriorityId = 3;
-            ResultJson(newissue);
-        }
-
-        private void tm_normal_Click(object sender, EventArgs e)
-        {
-            NewIssue newissue = new NewIssue();
-            newissue.PriorityId = 2;
-            ResultJson(newissue);
-        }
-
-        private void tm_low_Click(object sender, EventArgs e)
-        {
-            NewIssue newissue = new NewIssue();
-            newissue.PriorityId = 1;
+            newissue.TrackerId = tracker.Id;
             ResultJson(newissue);
         }
 

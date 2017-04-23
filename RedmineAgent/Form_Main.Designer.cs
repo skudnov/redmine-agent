@@ -52,23 +52,10 @@
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tm_infoIssue = new System.Windows.Forms.ToolStripMenuItem();
             this.tm_status = new System.Windows.Forms.ToolStripMenuItem();
-            this.tm_new = new System.Windows.Forms.ToolStripMenuItem();
-            this.tm_inProgress = new System.Windows.Forms.ToolStripMenuItem();
-            this.tm_Resolved = new System.Windows.Forms.ToolStripMenuItem();
-            this.tm_feedblack = new System.Windows.Forms.ToolStripMenuItem();
-            this.tm_closed = new System.Windows.Forms.ToolStripMenuItem();
-            this.tm_rejected = new System.Windows.Forms.ToolStripMenuItem();
-            this.tm_priority = new System.Windows.Forms.ToolStripMenuItem();
-            this.tm_immediate = new System.Windows.Forms.ToolStripMenuItem();
-            this.tm_urgent = new System.Windows.Forms.ToolStripMenuItem();
-            this.tm_high = new System.Windows.Forms.ToolStripMenuItem();
-            this.tm_normal = new System.Windows.Forms.ToolStripMenuItem();
-            this.tm_low = new System.Windows.Forms.ToolStripMenuItem();
-            this.tm_apointed = new System.Windows.Forms.ToolStripMenuItem();
             this.tm_tracker = new System.Windows.Forms.ToolStripMenuItem();
-            this.tm_bbug = new System.Windows.Forms.ToolStripMenuItem();
-            this.tm_feature = new System.Windows.Forms.ToolStripMenuItem();
-            this.tm_suppurt = new System.Windows.Forms.ToolStripMenuItem();
+            this.tm_priority = new System.Windows.Forms.ToolStripMenuItem();
+            this.tm_apointed = new System.Windows.Forms.ToolStripMenuItem();
+            this.tm_delete = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -198,13 +185,14 @@
             this.ch_priority,
             this.ch_assigned,
             this.ch_updated});
+            this.lv_issue.FullRowSelect = true;
             this.lv_issue.Location = new System.Drawing.Point(7, 19);
             this.lv_issue.Name = "lv_issue";
             this.lv_issue.Size = new System.Drawing.Size(516, 309);
             this.lv_issue.TabIndex = 0;
             this.lv_issue.UseCompatibleStateImageBehavior = false;
             this.lv_issue.View = System.Windows.Forms.View.Details;
-            this.lv_issue.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lv_issue_MouseDown);
+            this.lv_issue.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lv_issue_MouseClick);
             // 
             // ch_subject
             // 
@@ -250,9 +238,10 @@
             this.tm_status,
             this.tm_tracker,
             this.tm_priority,
-            this.tm_apointed});
+            this.tm_apointed,
+            this.tm_delete});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(198, 136);
+            this.contextMenuStrip.Size = new System.Drawing.Size(198, 158);
             // 
             // tm_infoIssue
             // 
@@ -264,113 +253,27 @@
             // 
             // tm_status
             // 
-            this.tm_status.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tm_new,
-            this.tm_inProgress,
-            this.tm_Resolved,
-            this.tm_feedblack,
-            this.tm_closed,
-            this.tm_rejected});
             this.tm_status.Enabled = false;
             this.tm_status.Name = "tm_status";
             this.tm_status.Size = new System.Drawing.Size(197, 22);
             this.tm_status.Text = "Статус";
+            this.tm_status.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tm_status_DropDownItemClicked);
             // 
-            // tm_new
+            // tm_tracker
             // 
-            this.tm_new.Name = "tm_new";
-            this.tm_new.Size = new System.Drawing.Size(132, 22);
-            this.tm_new.Text = "New";
-            this.tm_new.Visible = false;
-            this.tm_new.Click += new System.EventHandler(this.tm_new_Click);
-            // 
-            // tm_inProgress
-            // 
-            this.tm_inProgress.Name = "tm_inProgress";
-            this.tm_inProgress.Size = new System.Drawing.Size(132, 22);
-            this.tm_inProgress.Text = "In Progress";
-            this.tm_inProgress.Visible = false;
-            this.tm_inProgress.Click += new System.EventHandler(this.tm_inProgress_Click);
-            // 
-            // tm_Resolved
-            // 
-            this.tm_Resolved.Name = "tm_Resolved";
-            this.tm_Resolved.Size = new System.Drawing.Size(132, 22);
-            this.tm_Resolved.Text = "Resolved";
-            this.tm_Resolved.Visible = false;
-            this.tm_Resolved.Click += new System.EventHandler(this.tm_Resolved_Click);
-            // 
-            // tm_feedblack
-            // 
-            this.tm_feedblack.Name = "tm_feedblack";
-            this.tm_feedblack.Size = new System.Drawing.Size(132, 22);
-            this.tm_feedblack.Text = "Feedback";
-            this.tm_feedblack.Visible = false;
-            this.tm_feedblack.Click += new System.EventHandler(this.tm_feedblack_Click);
-            // 
-            // tm_closed
-            // 
-            this.tm_closed.Name = "tm_closed";
-            this.tm_closed.Size = new System.Drawing.Size(132, 22);
-            this.tm_closed.Text = "Closed";
-            this.tm_closed.Visible = false;
-            this.tm_closed.Click += new System.EventHandler(this.tm_closed_Click);
-            // 
-            // tm_rejected
-            // 
-            this.tm_rejected.Name = "tm_rejected";
-            this.tm_rejected.Size = new System.Drawing.Size(132, 22);
-            this.tm_rejected.Text = "Rejected";
-            this.tm_rejected.Visible = false;
-            this.tm_rejected.Click += new System.EventHandler(this.tm_rejected_Click);
+            this.tm_tracker.Enabled = false;
+            this.tm_tracker.Name = "tm_tracker";
+            this.tm_tracker.Size = new System.Drawing.Size(197, 22);
+            this.tm_tracker.Text = "Трекер";
+            this.tm_tracker.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tm_tracker_DropDownItemClicked);
             // 
             // tm_priority
             // 
-            this.tm_priority.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tm_immediate,
-            this.tm_urgent,
-            this.tm_high,
-            this.tm_normal,
-            this.tm_low});
             this.tm_priority.Enabled = false;
             this.tm_priority.Name = "tm_priority";
             this.tm_priority.Size = new System.Drawing.Size(197, 22);
             this.tm_priority.Text = "Приоритет";
-            // 
-            // tm_immediate
-            // 
-            this.tm_immediate.Name = "tm_immediate";
-            this.tm_immediate.Size = new System.Drawing.Size(152, 22);
-            this.tm_immediate.Text = "Immediate";
-            this.tm_immediate.Click += new System.EventHandler(this.tm_immediate_Click);
-            // 
-            // tm_urgent
-            // 
-            this.tm_urgent.Name = "tm_urgent";
-            this.tm_urgent.Size = new System.Drawing.Size(152, 22);
-            this.tm_urgent.Text = "Urgent";
-            this.tm_urgent.Click += new System.EventHandler(this.tm_urgent_Click);
-            // 
-            // tm_high
-            // 
-            this.tm_high.Name = "tm_high";
-            this.tm_high.Size = new System.Drawing.Size(152, 22);
-            this.tm_high.Text = "High";
-            this.tm_high.Click += new System.EventHandler(this.tm_high_Click);
-            // 
-            // tm_normal
-            // 
-            this.tm_normal.Name = "tm_normal";
-            this.tm_normal.Size = new System.Drawing.Size(152, 22);
-            this.tm_normal.Text = "Normal";
-            this.tm_normal.Click += new System.EventHandler(this.tm_normal_Click);
-            // 
-            // tm_low
-            // 
-            this.tm_low.Name = "tm_low";
-            this.tm_low.Size = new System.Drawing.Size(152, 22);
-            this.tm_low.Text = "Low";
-            this.tm_low.Click += new System.EventHandler(this.tm_low_Click);
+            this.tm_priority.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tm_priority_DropDownItemClicked);
             // 
             // tm_apointed
             // 
@@ -378,38 +281,15 @@
             this.tm_apointed.Name = "tm_apointed";
             this.tm_apointed.Size = new System.Drawing.Size(197, 22);
             this.tm_apointed.Text = "Назначена";
+            this.tm_apointed.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tm_apointed_DropDownItemClicked);
             // 
-            // tm_tracker
+            // tm_delete
             // 
-            this.tm_tracker.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tm_bbug,
-            this.tm_feature,
-            this.tm_suppurt});
-            this.tm_tracker.Enabled = false;
-            this.tm_tracker.Name = "tm_tracker";
-            this.tm_tracker.Size = new System.Drawing.Size(197, 22);
-            this.tm_tracker.Text = "Трекер";
-            // 
-            // tm_bbug
-            // 
-            this.tm_bbug.Name = "tm_bbug";
-            this.tm_bbug.Size = new System.Drawing.Size(152, 22);
-            this.tm_bbug.Text = "Bug";
-            this.tm_bbug.Click += new System.EventHandler(this.tm_bbug_Click);
-            // 
-            // tm_feature
-            // 
-            this.tm_feature.Name = "tm_feature";
-            this.tm_feature.Size = new System.Drawing.Size(152, 22);
-            this.tm_feature.Text = "Feature";
-            this.tm_feature.Click += new System.EventHandler(this.tm_feature_Click);
-            // 
-            // tm_suppurt
-            // 
-            this.tm_suppurt.Name = "tm_suppurt";
-            this.tm_suppurt.Size = new System.Drawing.Size(152, 22);
-            this.tm_suppurt.Text = "Support";
-            this.tm_suppurt.Click += new System.EventHandler(this.tm_suppurt_Click);
+            this.tm_delete.Enabled = false;
+            this.tm_delete.Name = "tm_delete";
+            this.tm_delete.Size = new System.Drawing.Size(197, 22);
+            this.tm_delete.Text = "Удалить";
+            this.tm_delete.Click += new System.EventHandler(this.tm_delete_Click);
             // 
             // Form_Main
             // 
@@ -464,21 +344,8 @@
         private System.Windows.Forms.ToolStripMenuItem tm_priority;
         private System.Windows.Forms.ToolStripMenuItem tm_apointed;
         private System.Windows.Forms.ToolStripMenuItem tm_infoIssue;
-        private System.Windows.Forms.ToolStripMenuItem tm_new;
-        private System.Windows.Forms.ToolStripMenuItem tm_inProgress;
-        private System.Windows.Forms.ToolStripMenuItem tm_Resolved;
-        private System.Windows.Forms.ToolStripMenuItem tm_feedblack;
-        private System.Windows.Forms.ToolStripMenuItem tm_closed;
-        private System.Windows.Forms.ToolStripMenuItem tm_rejected;
-        private System.Windows.Forms.ToolStripMenuItem tm_immediate;
-        private System.Windows.Forms.ToolStripMenuItem tm_urgent;
-        private System.Windows.Forms.ToolStripMenuItem tm_high;
-        private System.Windows.Forms.ToolStripMenuItem tm_normal;
-        private System.Windows.Forms.ToolStripMenuItem tm_low;
         private System.Windows.Forms.ToolStripMenuItem tm_tracker;
-        private System.Windows.Forms.ToolStripMenuItem tm_bbug;
-        private System.Windows.Forms.ToolStripMenuItem tm_feature;
-        private System.Windows.Forms.ToolStripMenuItem tm_suppurt;
+        private System.Windows.Forms.ToolStripMenuItem tm_delete;
 
     }
 }
