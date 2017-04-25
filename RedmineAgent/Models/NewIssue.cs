@@ -29,11 +29,11 @@ namespace RedmineAgent.Models
        [JsonProperty(PropertyName = "assigned_to_id")]
        public string AssignedToId { get; set; }
        [JsonProperty(PropertyName = "watcher_user_ids")]
-       public List<string> WatcherUserIds { get; set; }///?????
+       public List<string> WatcherUserIds { get; set; }
        [JsonProperty(PropertyName = "is_private")]
        public bool IsPrivate { get; set; }
        [JsonProperty(PropertyName = "estimated_hours")]
-       public int EstimatedHours { get; set; }//????
+       public int EstimatedHours { get; set; }
 
     }
 

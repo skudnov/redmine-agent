@@ -61,6 +61,12 @@
     <Compile Include="Form_Apikey.Designer.cs">
       <DependentUpon>Form_Apikey.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_HistoryIssue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_HistoryIssue.Designer.cs">
+      <DependentUpon>Form_HistoryIssue.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +91,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form_Apikey.resx">
       <DependentUpon>Form_Apikey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_HistoryIssue.resx">
+      <DependentUpon>Form_HistoryIssue.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_Main.resx">
       <DependentUpon>Form_Main.cs</DependentUpon>

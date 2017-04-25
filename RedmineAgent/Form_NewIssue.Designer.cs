@@ -47,8 +47,8 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.cb_estimated_hours = new System.Windows.Forms.ComboBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -71,6 +71,9 @@
             // 
             // tb_topic
             // 
+            this.tb_topic.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tb_topic.Location = new System.Drawing.Point(6, 20);
             this.tb_topic.Name = "tb_topic";
             this.tb_topic.Size = new System.Drawing.Size(246, 21);
@@ -88,6 +91,9 @@
             // 
             // tb_description
             // 
+            this.tb_description.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tb_description.Location = new System.Drawing.Point(6, 20);
             this.tb_description.Multiline = true;
             this.tb_description.Name = "tb_description";
@@ -96,6 +102,9 @@
             // 
             // cb_status
             // 
+            this.cb_status.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cb_status.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_status.FormattingEnabled = true;
             this.cb_status.Location = new System.Drawing.Point(6, 20);
@@ -105,6 +114,9 @@
             // 
             // cb_priority
             // 
+            this.cb_priority.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cb_priority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_priority.FormattingEnabled = true;
             this.cb_priority.Location = new System.Drawing.Point(6, 20);
@@ -114,6 +126,9 @@
             // 
             // cb_assigned
             // 
+            this.cb_assigned.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cb_assigned.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_assigned.FormattingEnabled = true;
             this.cb_assigned.Items.AddRange(new object[] {
@@ -145,6 +160,9 @@
             // 
             // label11
             // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label11.AutoSize = true;
             this.label11.Enabled = false;
             this.label11.Location = new System.Drawing.Point(134, 25);
@@ -155,6 +173,9 @@
             // 
             // cb_checkmember
             // 
+            this.cb_checkmember.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cb_checkmember.FormattingEnabled = true;
             this.cb_checkmember.Location = new System.Drawing.Point(6, 15);
             this.cb_checkmember.Name = "cb_checkmember";
@@ -174,6 +195,9 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.tb_topic);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox2.Location = new System.Drawing.Point(49, 66);
@@ -185,6 +209,9 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.tb_description);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox3.Location = new System.Drawing.Point(49, 120);
@@ -196,6 +223,9 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.Controls.Add(this.cb_status);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox4.Location = new System.Drawing.Point(12, 238);
@@ -207,6 +237,9 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox5.Controls.Add(this.cb_checkmember);
             this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox5.Location = new System.Drawing.Point(170, 295);
@@ -218,6 +251,9 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox6.Controls.Add(this.cb_priority);
             this.groupBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox6.Location = new System.Drawing.Point(12, 295);
@@ -229,6 +265,9 @@
             // 
             // groupBox7
             // 
+            this.groupBox7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox7.Controls.Add(this.cb_assigned);
             this.groupBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox7.Location = new System.Drawing.Point(12, 352);
@@ -240,6 +279,9 @@
             // 
             // groupBox8
             // 
+            this.groupBox8.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox8.Controls.Add(this.cb_estimated_hours);
             this.groupBox8.Controls.Add(this.label11);
             this.groupBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -250,18 +292,11 @@
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Оценка трудозатрат";
             // 
-            // groupBox9
-            // 
-            this.groupBox9.Controls.Add(this.bt_newissue);
-            this.groupBox9.Controls.Add(this.bt_cancel);
-            this.groupBox9.Location = new System.Drawing.Point(64, 406);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(200, 53);
-            this.groupBox9.TabIndex = 10;
-            this.groupBox9.TabStop = false;
-            // 
             // cb_estimated_hours
             // 
+            this.cb_estimated_hours.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cb_estimated_hours.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_estimated_hours.FormattingEnabled = true;
             this.cb_estimated_hours.Items.AddRange(new object[] {
@@ -294,6 +329,16 @@
             this.cb_estimated_hours.Size = new System.Drawing.Size(125, 23);
             this.cb_estimated_hours.TabIndex = 5;
             // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.bt_newissue);
+            this.groupBox9.Controls.Add(this.bt_cancel);
+            this.groupBox9.Location = new System.Drawing.Point(64, 406);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(200, 53);
+            this.groupBox9.TabIndex = 10;
+            this.groupBox9.TabStop = false;
+            // 
             // Form_NewIssue
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -309,7 +354,11 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cb_private);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximumSize = new System.Drawing.Size(390, 509);
+            this.MinimumSize = new System.Drawing.Size(390, 509);
             this.Name = "Form_NewIssue";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Создание задачи";
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);

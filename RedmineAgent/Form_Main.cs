@@ -284,7 +284,7 @@ namespace RedmineAgent
         {
             new Form_NewIssue(idProject[cb_project.SelectedIndex - 1]).ShowDialog();
         }
-
+        
         public void ResultJson(NewIssue newissue)
         {
             Issue issue = controller.IssueInfo(lv_issue.FocusedItem.Text);
@@ -393,6 +393,12 @@ namespace RedmineAgent
             NewIssue newissue = new NewIssue();
             newissue.TrackerId = tracker.Id;
             ResultJson(newissue);
+        }
+
+        private void tm_history_Click(object sender, EventArgs e)
+        {
+            Issue issue = controller.IssueInfo(lv_issue.FocusedItem.Text);
+            new Form_HistoryIssue(issue.Id).ShowDialog();
         }
 
        

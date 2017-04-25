@@ -18,6 +18,13 @@ namespace RedmineAgent.Models
         [JsonProperty(PropertyName = "limit")]
         public int Limit { get; set; }
     }
+
+    public class IssuesHistory
+    {
+        [JsonProperty(PropertyName = "issue")]
+        public Issue IssueHistory { get; set; }
+        
+    }
     public class Issue
     {
         [JsonProperty(PropertyName = "id")]
@@ -46,6 +53,8 @@ namespace RedmineAgent.Models
         public DateTime UpdatedOn { get; set; }
         [JsonProperty(PropertyName = "assigned_to")]
         public Assigned AssignedTo { get; set; }
+        [JsonProperty(PropertyName = "journals")]
+        public List<HistoryIssue> Journals { get; set; }
     }
     public class Tracker
     {
@@ -82,6 +91,36 @@ namespace RedmineAgent.Models
         public int Id { get; set; }
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+    }
+
+    public class HistoryIssue
+    {
+        [JsonProperty(PropertyName = "id")]
+        public int Id { get; set; }
+        [JsonProperty(PropertyName = "user")]
+        public UserHistory User { get; set; }
+        [JsonProperty(PropertyName = "created_on")]
+        public DateTime CreatedOn { get; set; }
+        [JsonProperty(PropertyName = "details")]
+        public List<DetailsHistory> Details { get; set; }
+    }
+    public class UserHistory
+    {
+        [JsonProperty(PropertyName = "id")]
+        public int Id { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+    }
+    public class DetailsHistory
+    {
+        [JsonProperty(PropertyName = "property")]
+        public string Property { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+        [JsonProperty(PropertyName = "old_value")]
+        public string OldValue { get; set; }
+        [JsonProperty(PropertyName = "new_value")]
+        public string NewValue { get; set; }
     }
 
 

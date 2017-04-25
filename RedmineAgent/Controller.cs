@@ -20,6 +20,7 @@ namespace RedmineAgent
         public Action<string> issueLoading;
         public Action<string> UpdateStatus;
         public Action<string> OneIssueDelete;
+        public Action<Issue, string, List<StatusNew>, List<IssuePrioriti>, List<TrackerNew>> HistoryIssueUpdate;
 
 
         private List<Project> projects;
@@ -29,6 +30,7 @@ namespace RedmineAgent
         private List<TrackerNew> tracker;
         private List<StatusNew> status;
         private List<IssuePrioriti> issueprioriti;
+        private Issue historyissue;
 
 
 
@@ -449,6 +451,74 @@ namespace RedmineAgent
             {
                 OneIssueDelete("errorInternet");
 
+            }
+        }
+
+        public void HistoryIssue(int issueid)
+        {
+            if (CheckInternet.CheckTheInternet() == "Connected")
+            {
+                try
+                {
+                    HttpWebRequest request;
+                    HttpWebResponse response;
+                    StreamReader streamReader;
+                         string jsonResult="";
+                    request = (HttpWebRequest)WebRequest.Create("http://student-rm.exactpro.com/issues/"+issueid+".json?include=journals");
+                    request.Method = "GET";
+                    request.Headers.Add("X-Redmine-API-Key", Properties.Settings.Default.api_key);
+                    request.Accept = "application/json";
+                    response = (HttpWebResponse)request.GetResponse();
+                     streamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                   jsonResult = streamReader.ReadToEnd();
+                    response.Close();
+                    streamReader.Close();
+                    historyissue = JsonConvert.DeserializeObject<IssuesHistory>(jsonResult).IssueHistory;
+
+                    request = (HttpWebRequest)WebRequest.Create("http://student-rm.exactpro.com/trackers.json");
+                    request.Method = "GET";
+                    request.Headers.Add("X-Redmine-API-Key", Properties.Settings.Default.api_key);
+                    request.Accept = "application/json";
+                    response = (HttpWebResponse)request.GetResponse();
+                    streamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                    jsonResult = streamReader.ReadToEnd();
+                    response.Close();
+                    streamReader.Close();
+                    tracker = JsonConvert.DeserializeObject<Trackers>(jsonResult).TrackersList;
+
+                    request = (HttpWebRequest)WebRequest.Create("http://student-rm.exactpro.com/issue_statuses.json");
+                    request.Method = "GET";
+                    request.Headers.Add("X-Redmine-API-Key", Properties.Settings.Default.api_key);
+                    request.Accept = "application/json";
+                    response = (HttpWebResponse)request.GetResponse();
+                    streamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                    jsonResult = streamReader.ReadToEnd();
+                    response.Close();
+                    streamReader.Close();
+                    status = JsonConvert.DeserializeObject<Statues>(jsonResult).StatuesList;
+
+                    request = (HttpWebRequest)WebRequest.Create("http://student-rm.exactpro.com/enumerations/issue_priorities.json");
+                    request.Method = "GET";
+                    request.Headers.Add("X-Redmine-API-Key", Properties.Settings.Default.api_key);
+                    request.Accept = "application/json";
+                    response = (HttpWebResponse)request.GetResponse();
+                    streamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                    jsonResult = streamReader.ReadToEnd();
+                    response.Close();
+                    streamReader.Close();
+                    issueprioriti = JsonConvert.DeserializeObject<IssuePriorities>(jsonResult).IssuePrioritiesList;
+                    
+                    if (HistoryIssueUpdate != null)
+                        HistoryIssueUpdate(historyissue, "noError",status,issueprioriti,tracker);
+                }
+                catch
+                {
+                    HistoryIssueUpdate(null,"errorKey",null,null,null);
+                }
+            }
+            else
+            {
+                HistoryIssueUpdate(null,"errorInternet",null,null,null);
             }
         }
 

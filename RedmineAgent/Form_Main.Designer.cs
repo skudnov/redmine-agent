@@ -56,6 +56,7 @@
             this.tm_priority = new System.Windows.Forms.ToolStripMenuItem();
             this.tm_apointed = new System.Windows.Forms.ToolStripMenuItem();
             this.tm_delete = new System.Windows.Forms.ToolStripMenuItem();
+            this.tm_history = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -197,7 +198,7 @@
             // ch_subject
             // 
             this.ch_subject.Text = "Задача";
-            this.ch_subject.Width = 64;
+            this.ch_subject.Width = 74;
             // 
             // ch_tracker
             // 
@@ -235,13 +236,14 @@
             // 
             this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tm_infoIssue,
+            this.tm_history,
             this.tm_status,
             this.tm_tracker,
             this.tm_priority,
             this.tm_apointed,
             this.tm_delete});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(198, 158);
+            this.contextMenuStrip.Size = new System.Drawing.Size(198, 180);
             // 
             // tm_infoIssue
             // 
@@ -290,6 +292,13 @@
             this.tm_delete.Size = new System.Drawing.Size(197, 22);
             this.tm_delete.Text = "Удалить";
             this.tm_delete.Click += new System.EventHandler(this.tm_delete_Click);
+            // 
+            // tm_history
+            // 
+            this.tm_history.Name = "tm_history";
+            this.tm_history.Size = new System.Drawing.Size(197, 22);
+            this.tm_history.Text = "История задачи";
+            this.tm_history.Click += new System.EventHandler(this.tm_history_Click);
             // 
             // Form_Main
             // 
@@ -346,6 +355,7 @@
         private System.Windows.Forms.ToolStripMenuItem tm_infoIssue;
         private System.Windows.Forms.ToolStripMenuItem tm_tracker;
         private System.Windows.Forms.ToolStripMenuItem tm_delete;
+        private System.Windows.Forms.ToolStripMenuItem tm_history;
 
     }
 }
