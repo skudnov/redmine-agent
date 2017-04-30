@@ -16,7 +16,7 @@ namespace RedmineAgent
            try
            {
                WebClient Client = new WebClient();
-               String Response = Client.DownloadString("http://www.google.com");
+               String Response = Client.DownloadString("https://www.microsoft.com/ru-ru/");
                return "Connected";
            }
             catch

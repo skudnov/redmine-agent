@@ -20,84 +20,137 @@ namespace RedmineAgent
 
         public Form_NewIssue(int projectid)
         {
-            this.projectid = projectid;
+
             InitializeComponent();
+
+            this.projectid = projectid;
             controller = Program.controllerProgram;
-            controller.UpdateFormNewIssue += UpdateFormNewIssue;
-            controller.InfoNewIssue();
-            cb_trackers.SelectedIndex = 0;
-            cb_status.SelectedIndex = 0;
-            cb_priority.SelectedIndex = 0;
-            cb_assigned.SelectedIndex = 0;
+            UpdateFormNewIssue();
             controller.issueLoading += UpdateIssueNew;
         }
 
         private void UpdateIssueNew(string cheсk)
         {
-            if (cheсk == "noError")
+            Action action = () =>
             {
-                controller.UpdateIssue(projectid);
-                this.Close();
 
-            }
-            else if (cheсk == "errorKey")
-            {
-                bt_newissue.Enabled = true;
-                bt_cancel.Enabled = true;
-                MessageBox.Show("Введенный api-key неправильный. Повторите ввод!", "Ошибка Api-key");
-                new Form_Apikey().ShowDialog();
+                if (cheсk == "noError")
+                {
+                    controller.UpdateIssue(projectid);
+                    this.Close();
 
-            }
-            else if (cheсk == "errorInternet")
-            {
-                bt_newissue.Enabled = true;
-                bt_cancel.Enabled = true;
-                MessageBox.Show("Проверьте подключение к интернету!", "Ошибка");
-            }
-        }
-
-        private void UpdateFormNewIssue(List<TrackerNew> trackers, List<StatusNew> status, List<IssuePrioriti> issueprioriti, List<Membership> membership, string check)
-        {
-            if (check == "noError")
-            {
-                foreach (TrackerNew tracker in trackers)
-                {
-                    cb_trackers.Items.Add(tracker.Name);
                 }
-                foreach (StatusNew st in status)
-                {
-                    if (st.Name == "New")
-                        cb_status.Items.Add(st.Name);
-                }
-                foreach (IssuePrioriti ip in issueprioriti)
-                {
-                    cb_priority.Items.Add(ip.Name);
-                }
-
-                foreach (Membership mb in membership)
-                {
-                    if (mb.Member != null)
-                    {
-                        cb_assigned.Items.Add(mb.Member.Name);
-                        cb_checkmember.Items.Add(mb.Member.Name);
-                    }
-                }
-            }
-            else
-                if (check == "errorKey")
+                else if (cheсk == "errorKey")
                 {
                     bt_newissue.Enabled = true;
                     bt_cancel.Enabled = true;
                     MessageBox.Show("Введенный api-key неправильный. Повторите ввод!", "Ошибка Api-key");
                     new Form_Apikey().ShowDialog();
+
                 }
-                else if (check == "errorInternet")
+                else if (cheсk == "errorInternet")
                 {
                     bt_newissue.Enabled = true;
                     bt_cancel.Enabled = true;
                     MessageBox.Show("Проверьте подключение к интернету!", "Ошибка");
                 }
+
+            };
+            if (InvokeRequired)
+                Invoke(action);
+            else
+                action();
         }
+        public void UpdateFormNewIssue()
+        {
+            List<StatusNew> liststatus = controller.StatusInfo();
+            List<TrackerNew> listracker = controller.TrackerInfo();
+            List<IssuePrioriti> listpriority = controller.PriorityInfo();
+            membershipslist = controller.MembershipInfo();
+
+            foreach (TrackerNew tracker in listracker)
+            {
+                cb_trackers.Items.Add(tracker.Name);
+            }
+            foreach (StatusNew st in liststatus)
+            {
+                if (st.Name == "New")
+                    cb_status.Items.Add(st.Name);
+            }
+            foreach (IssuePrioriti ip in listpriority)
+            {
+                cb_priority.Items.Add(ip.Name);
+            }
+
+            foreach (Membership mb in membershipslist)
+            {
+                if (mb.Member != null)
+                {
+                    cb_assigned.Items.Add(mb.Member.Name);
+                    cb_checkmember.Items.Add(mb.Member.Name);
+                }
+            }
+            cb_trackers.SelectedIndex = 0;
+            cb_status.SelectedIndex = 0;
+            cb_priority.SelectedIndex = 0;
+            cb_assigned.SelectedIndex = 0;
+        }
+
+      /*  private void UpdateFormNewIssue(List<TrackerNew> trackers, List<StatusNew> status, List<IssuePrioriti> issueprioriti, List<Membership> membership, string check)
+        {
+            Action action = () =>
+            {
+
+                if (check == "noError")
+                {
+                    foreach (TrackerNew tracker in trackers)
+                    {
+                        cb_trackers.Items.Add(tracker.Name);
+                    }
+                    foreach (StatusNew st in status)
+                    {
+                        if (st.Name == "New")
+                            cb_status.Items.Add(st.Name);
+                    }
+                    foreach (IssuePrioriti ip in issueprioriti)
+                    {
+                        cb_priority.Items.Add(ip.Name);
+                    }
+
+                    foreach (Membership mb in membership)
+                    {
+                        if (mb.Member != null)
+                        {
+                            cb_assigned.Items.Add(mb.Member.Name);
+                            cb_checkmember.Items.Add(mb.Member.Name);
+                        }
+                    }
+                    cb_trackers.SelectedIndex = 0;
+                    cb_status.SelectedIndex = 0;
+                    cb_priority.SelectedIndex = 0;
+                    cb_assigned.SelectedIndex = 0;
+                }
+                else
+                    if (check == "errorKey")
+                    {
+                        bt_newissue.Enabled = true;
+                        bt_cancel.Enabled = true;
+                        MessageBox.Show("Введенный api-key неправильный. Повторите ввод!", "Ошибка Api-key");
+                        new Form_Apikey().ShowDialog();
+                    }
+                    else if (check == "errorInternet")
+                    {
+                        bt_newissue.Enabled = true;
+                        bt_cancel.Enabled = true;
+                        MessageBox.Show("Проверьте подключение к интернету!", "Ошибка");
+                    }
+
+            };
+            if (InvokeRequired)
+                Invoke(action);
+            else
+                action();
+        } */
 
         private void bt_cancel_Click(object sender, EventArgs e)
         {
@@ -111,17 +164,46 @@ namespace RedmineAgent
             if (tb_topic != null)
             {
                 NewIssue newissue = new NewIssue();
-                //Id проекте
+                //Id проектa
                 newissue.ProjectId = projectid;
                 // Получение списка трекеров
-                TrackerNew track = controller.TrackerInfo(cb_trackers.Text);
-                newissue.TrackerId = track.Id;
+                List<TrackerNew> listracker = controller.TrackerInfo();
+               
+                foreach (TrackerNew tr in listracker)
+                {
+                    if (tr.Name == cb_trackers.Text)
+                    {
+                        newissue.TrackerId = tr.Id;
+                        break;
+                    }
+
+                }
+              
                 //Получение списка статусов
-                StatusNew stat = controller.StatusInfo(cb_status.Text);
-                newissue.StatusId = stat.Id;
+                List<StatusNew> liststatus = controller.StatusInfo();
+               
+                foreach (StatusNew st in liststatus)
+                {
+                    if (st.Name == cb_status.Text)
+                    {
+                        newissue.StatusId = st.Id;
+                        break;
+                    }
+
+                }
+
                 //Приоритет 
-                IssuePrioriti prior = controller.PriorityInfo(cb_priority.Text);
-                newissue.PriorityId = prior.Id;
+
+                List<IssuePrioriti> listpriority = controller.PriorityInfo();
+                foreach (IssuePrioriti pr in listpriority)
+                {
+                    if (pr.Name == cb_priority.Text)
+                    {
+                        newissue.PriorityId = pr.Id;
+                        break;
+                    }
+                }
+              
                 //Название темы
                 newissue.Subject = tb_topic.Text;
                 //Описание
@@ -152,7 +234,7 @@ namespace RedmineAgent
                     {
                         foreach (Membership mb in membershipslist)
                         {
-                            if (mb.Member.Name == check)
+                            if (mb.Member.Name == check.ToString())
                             {
                                 memberis.Add(Convert.ToString(mb.Member.Id));
                             }
@@ -169,6 +251,12 @@ namespace RedmineAgent
             {
                 MessageBox.Show("Введите тему задачи!", "Ошибка");
             }
+        }
+
+        private void tb_topic_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                bt_newissue.PerformClick();
         }
     }
 }

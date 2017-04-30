@@ -1,12 +1,12 @@
 F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\bin\Debug\RedmineAgent.exe.config
 F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\bin\Debug\RedmineAgent.exe
 F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\bin\Debug\RedmineAgent.pdb
-F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.csprojResolveAssemblyReference.cache
+F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.Form_Apikey.resources
+F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.Form_HistoryIssue.resources
+F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.Form_Main.resources
+F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.Form_NewIssue.resources
 F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.Properties.Resources.resources
 F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.csproj.GenerateResource.Cache
 F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.exe
 F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.pdb
-F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.Form_Apikey.resources
-F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.Form_Main.resources
-F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.Form_NewIssue.resources
-F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.Form_HistoryIssue.resources
+F:\ФАСТ\2 курс\exactpro\RedmineAgent\RedmineAgent\obj\Debug\RedmineAgent.csprojResolveAssemblyReference.cache

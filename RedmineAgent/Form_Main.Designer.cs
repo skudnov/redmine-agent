@@ -29,15 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Main));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_newissue = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_info = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_exit = new System.Windows.Forms.ToolStripMenuItem();
-            this.входToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mi_apikey = new System.Windows.Forms.ToolStripMenuItem();
+            this.tm_stap = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_update = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_ifoprj = new System.Windows.Forms.ToolStripMenuItem();
+            this.tb_RealTime = new System.Windows.Forms.ToolStripTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cb_project = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -51,12 +52,12 @@
             this.lb_role = new System.Windows.Forms.Label();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tm_infoIssue = new System.Windows.Forms.ToolStripMenuItem();
+            this.tm_history = new System.Windows.Forms.ToolStripMenuItem();
             this.tm_status = new System.Windows.Forms.ToolStripMenuItem();
             this.tm_tracker = new System.Windows.Forms.ToolStripMenuItem();
             this.tm_priority = new System.Windows.Forms.ToolStripMenuItem();
             this.tm_apointed = new System.Windows.Forms.ToolStripMenuItem();
             this.tm_delete = new System.Windows.Forms.ToolStripMenuItem();
-            this.tm_history = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -67,12 +68,13 @@
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
-            this.входToolStripMenuItem,
+            this.tm_stap,
             this.mi_update,
-            this.mi_ifoprj});
+            this.mi_ifoprj,
+            this.tb_RealTime});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(554, 24);
+            this.menuStrip.Size = new System.Drawing.Size(554, 27);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "menuStrip";
             // 
@@ -83,7 +85,7 @@
             this.mi_info,
             this.mi_exit});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 23);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
             // mi_newissue
@@ -96,6 +98,7 @@
             // 
             // mi_info
             // 
+            this.mi_info.Enabled = false;
             this.mi_info.Name = "mi_info";
             this.mi_info.Size = new System.Drawing.Size(216, 22);
             this.mi_info.Text = "Информация об аккаунте";
@@ -108,25 +111,18 @@
             this.mi_exit.Text = "Выход из программы";
             this.mi_exit.Click += new System.EventHandler(this.mi_exit_Click);
             // 
-            // входToolStripMenuItem
+            // tm_stap
             // 
-            this.входToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mi_apikey});
-            this.входToolStripMenuItem.Name = "входToolStripMenuItem";
-            this.входToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.входToolStripMenuItem.Text = "Вход";
-            // 
-            // mi_apikey
-            // 
-            this.mi_apikey.Name = "mi_apikey";
-            this.mi_apikey.Size = new System.Drawing.Size(158, 22);
-            this.mi_apikey.Text = "Вход по api-key";
-            this.mi_apikey.Click += new System.EventHandler(this.mi_apikey_Click);
+            this.tm_stap.Name = "tm_stap";
+            this.tm_stap.Size = new System.Drawing.Size(44, 23);
+            this.tm_stap.Text = "Вход";
+            this.tm_stap.Click += new System.EventHandler(this.tm_stap_Click);
             // 
             // mi_update
             // 
+            this.mi_update.Enabled = false;
             this.mi_update.Name = "mi_update";
-            this.mi_update.Size = new System.Drawing.Size(73, 20);
+            this.mi_update.Size = new System.Drawing.Size(73, 23);
             this.mi_update.Text = "Обновить";
             this.mi_update.Click += new System.EventHandler(this.mi_update_Click);
             // 
@@ -135,9 +131,17 @@
             this.mi_ifoprj.Enabled = false;
             this.mi_ifoprj.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.mi_ifoprj.Name = "mi_ifoprj";
-            this.mi_ifoprj.Size = new System.Drawing.Size(75, 20);
+            this.mi_ifoprj.Size = new System.Drawing.Size(75, 23);
             this.mi_ifoprj.Text = "О проекте";
             this.mi_ifoprj.Click += new System.EventHandler(this.mi_ifoprj_Click);
+            // 
+            // tb_RealTime
+            // 
+            this.tb_RealTime.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
+            this.tb_RealTime.HideSelection = false;
+            this.tb_RealTime.Name = "tb_RealTime";
+            this.tb_RealTime.ReadOnly = true;
+            this.tb_RealTime.Size = new System.Drawing.Size(150, 23);
             // 
             // groupBox1
             // 
@@ -160,6 +164,7 @@
             this.cb_project.Size = new System.Drawing.Size(215, 21);
             this.cb_project.TabIndex = 0;
             this.cb_project.SelectedIndexChanged += new System.EventHandler(this.cb_project_SelectedIndexChanged);
+            this.cb_project.MouseClick += new System.Windows.Forms.MouseEventHandler(this.cb_project_MouseClick);
             // 
             // groupBox2
             // 
@@ -190,9 +195,10 @@
             this.lv_issue.Location = new System.Drawing.Point(7, 19);
             this.lv_issue.Name = "lv_issue";
             this.lv_issue.Size = new System.Drawing.Size(516, 309);
-            this.lv_issue.TabIndex = 0;
+            this.lv_issue.TabIndex = 1;
             this.lv_issue.UseCompatibleStateImageBehavior = false;
             this.lv_issue.View = System.Windows.Forms.View.Details;
+            this.lv_issue.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_issue_ColumnClick);
             this.lv_issue.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lv_issue_MouseClick);
             // 
             // ch_subject
@@ -243,7 +249,7 @@
             this.tm_apointed,
             this.tm_delete});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(198, 180);
+            this.contextMenuStrip.Size = new System.Drawing.Size(198, 158);
             // 
             // tm_infoIssue
             // 
@@ -252,6 +258,13 @@
             this.tm_infoIssue.Size = new System.Drawing.Size(197, 22);
             this.tm_infoIssue.Text = "Информация о задаче";
             this.tm_infoIssue.Click += new System.EventHandler(this.tm_infoIssue_Click);
+            // 
+            // tm_history
+            // 
+            this.tm_history.Name = "tm_history";
+            this.tm_history.Size = new System.Drawing.Size(197, 22);
+            this.tm_history.Text = "История задачи";
+            this.tm_history.Click += new System.EventHandler(this.tm_history_Click);
             // 
             // tm_status
             // 
@@ -293,13 +306,6 @@
             this.tm_delete.Text = "Удалить";
             this.tm_delete.Click += new System.EventHandler(this.tm_delete_Click);
             // 
-            // tm_history
-            // 
-            this.tm_history.Name = "tm_history";
-            this.tm_history.Size = new System.Drawing.Size(197, 22);
-            this.tm_history.Text = "История задачи";
-            this.tm_history.Click += new System.EventHandler(this.tm_history_Click);
-            // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -309,7 +315,8 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip);
-            this.DoubleBuffered = true;
+            this.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
             this.MinimumSize = new System.Drawing.Size(570, 473);
             this.Name = "Form_Main";
@@ -332,8 +339,7 @@
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mi_newissue;
         private System.Windows.Forms.ToolStripMenuItem mi_exit;
-        private System.Windows.Forms.ToolStripMenuItem входToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mi_apikey;
+        private System.Windows.Forms.ToolStripMenuItem tm_stap;
         private System.Windows.Forms.ToolStripMenuItem mi_update;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox cb_project;
@@ -356,6 +362,7 @@
         private System.Windows.Forms.ToolStripMenuItem tm_tracker;
         private System.Windows.Forms.ToolStripMenuItem tm_delete;
         private System.Windows.Forms.ToolStripMenuItem tm_history;
+        private System.Windows.Forms.ToolStripTextBox tb_RealTime;
 
     }
 }

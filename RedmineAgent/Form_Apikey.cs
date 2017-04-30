@@ -23,47 +23,50 @@ namespace RedmineAgent
 
         private void bt_login_Click(object sender, EventArgs e)
         {
+            
             bt_login.Enabled = false;
             bt_cancel.Enabled = false;
-            controller.LoginApiKey(tbapikey.Text);
-          
-            // запомнить или нет
-            if (cbapikey.Checked==true)
-            {
-                
-            }
-            else
-            {
-
-            }
+            controller.LoginApiKey(tbapikey.Text,cbapikey.Checked);
         }
 
-        private void apiKeyChanged(string check)
+        private void apiKeyChanged(string check, bool checkapi)
         {
-            if (check =="noError")
-            {
-                this.Close();
-                
-            }
-            else if (check == "errorKey")
-            {
-                MessageBox.Show("Введенный api-key неправильный. Повторите ввод!","Ошибка Api-key");
-                bt_login.Enabled = true;
-                bt_cancel.Enabled = true;
-            }
-            else if (check == "errorInternet")
-            {
-                bt_login.Enabled = true;
-                bt_cancel.Enabled = true;
-                MessageBox.Show("Проверьте подключение к интернету!", "Ошибка");
-            }
-           
+            Action action = () =>
+                {
+
+                    if (check == "noError")
+                    {
+                        this.Close();
+
+                    }
+                    else if (check == "errorKey")
+                    {
+                        MessageBox.Show("Введенный api-key неправильный. Повторите ввод!", "Ошибка Api-key");
+                        bt_login.Enabled = true;
+                        bt_cancel.Enabled = true;
+                    }
+                    else if (check == "errorInternet")
+                    {
+                        bt_login.Enabled = true;
+                        bt_cancel.Enabled = true;
+                        MessageBox.Show("Проверьте подключение к интернету!", "Ошибка");
+                    }
+                    else if (check == "unknownError")
+                        MessageBox.Show("Повторите попытку,неизвестная ошибка!", "Неизвестная ошибка");
+
+                };
+            if (InvokeRequired)
+                Invoke(action);
+            else
+                action();
+
         }
 
-        private void tbapikey_KeyUp(object sender, KeyEventArgs e)
+        private void tbapikey_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter) bt_login.PerformClick();
         }
-        
+
+      
     }
 }

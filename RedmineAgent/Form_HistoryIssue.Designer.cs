@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_HistoryIssue));
             this.lv_history = new System.Windows.Forms.ListView();
             this.ch_name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_date = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -36,20 +37,19 @@
             // 
             // lv_history
             // 
-            this.lv_history.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.lv_history.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ch_name,
             this.ch_date,
             this.ch_created});
+            this.lv_history.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lv_history.FullRowSelect = true;
-            this.lv_history.Location = new System.Drawing.Point(12, 12);
+            this.lv_history.Location = new System.Drawing.Point(0, 0);
             this.lv_history.Name = "lv_history";
-            this.lv_history.Size = new System.Drawing.Size(504, 324);
+            this.lv_history.Size = new System.Drawing.Size(528, 348);
             this.lv_history.TabIndex = 0;
             this.lv_history.UseCompatibleStateImageBehavior = false;
             this.lv_history.View = System.Windows.Forms.View.Details;
+            this.lv_history.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_history_ColumnClick);
             // 
             // ch_name
             // 
@@ -59,12 +59,12 @@
             // ch_date
             // 
             this.ch_date.Text = "Дата изменения";
-            this.ch_date.Width = 116;
+            this.ch_date.Width = 136;
             // 
             // ch_created
             // 
             this.ch_created.Text = "Изменение";
-            this.ch_created.Width = 106;
+            this.ch_created.Width = 269;
             // 
             // Form_HistoryIssue
             // 
@@ -72,10 +72,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(528, 348);
             this.Controls.Add(this.lv_history);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(544, 387);
             this.Name = "Form_HistoryIssue";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "История задачи";
-            this.Load += new System.EventHandler(this.Form_HistoryIssue_Load);
             this.ResumeLayout(false);
 
         }

@@ -55,7 +55,7 @@
             this.bt_cancel.Location = new System.Drawing.Point(218, 81);
             this.bt_cancel.Name = "bt_cancel";
             this.bt_cancel.Size = new System.Drawing.Size(75, 23);
-            this.bt_cancel.TabIndex = 3;
+            this.bt_cancel.TabIndex = 4;
             this.bt_cancel.Text = "Отмена";
             this.bt_cancel.UseVisualStyleBackColor = true;
             this.bt_cancel.Click += new System.EventHandler(this.bt_cancel_Click);
@@ -88,7 +88,7 @@
             this.tbapikey.Name = "tbapikey";
             this.tbapikey.Size = new System.Drawing.Size(287, 20);
             this.tbapikey.TabIndex = 1;
-            this.tbapikey.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tbapikey_KeyUp);
+            this.tbapikey.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbapikey_KeyDown);
             // 
             // label1
             // 

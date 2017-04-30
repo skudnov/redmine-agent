@@ -36,5 +36,14 @@ namespace RedmineAgent.Models
         public DateTime CreatedOn { get; set; }
         [JsonProperty(PropertyName = "updated_on")]
         public DateTime UpdatedOn { get; set; }
+        [JsonProperty(PropertyName = "parent")]
+        public Parent Parent { get; set; }
+    }
+    public class Parent
+    {
+        [JsonProperty(PropertyName = "id")]
+        public int Id { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
     }
 }

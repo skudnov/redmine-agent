@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_NewIssue));
             this.cb_trackers = new System.Windows.Forms.ComboBox();
             this.tb_topic = new System.Windows.Forms.TextBox();
             this.cb_private = new System.Windows.Forms.CheckBox();
@@ -67,7 +68,7 @@
             this.cb_trackers.Location = new System.Drawing.Point(6, 19);
             this.cb_trackers.Name = "cb_trackers";
             this.cb_trackers.Size = new System.Drawing.Size(140, 23);
-            this.cb_trackers.TabIndex = 1;
+            this.cb_trackers.TabIndex = 0;
             // 
             // tb_topic
             // 
@@ -76,8 +77,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tb_topic.Location = new System.Drawing.Point(6, 20);
             this.tb_topic.Name = "tb_topic";
-            this.tb_topic.Size = new System.Drawing.Size(246, 21);
+            this.tb_topic.Size = new System.Drawing.Size(242, 21);
             this.tb_topic.TabIndex = 2;
+            this.tb_topic.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tb_topic_KeyDown);
             // 
             // cb_private
             // 
@@ -85,7 +87,7 @@
             this.cb_private.Location = new System.Drawing.Point(238, 34);
             this.cb_private.Name = "cb_private";
             this.cb_private.Size = new System.Drawing.Size(69, 17);
-            this.cb_private.TabIndex = 3;
+            this.cb_private.TabIndex = 1;
             this.cb_private.Text = "Частная";
             this.cb_private.UseVisualStyleBackColor = true;
             // 
@@ -97,8 +99,8 @@
             this.tb_description.Location = new System.Drawing.Point(6, 20);
             this.tb_description.Multiline = true;
             this.tb_description.Name = "tb_description";
-            this.tb_description.Size = new System.Drawing.Size(246, 86);
-            this.tb_description.TabIndex = 4;
+            this.tb_description.Size = new System.Drawing.Size(242, 82);
+            this.tb_description.TabIndex = 3;
             // 
             // cb_status
             // 
@@ -109,8 +111,8 @@
             this.cb_status.FormattingEnabled = true;
             this.cb_status.Location = new System.Drawing.Point(6, 20);
             this.cb_status.Name = "cb_status";
-            this.cb_status.Size = new System.Drawing.Size(140, 23);
-            this.cb_status.TabIndex = 5;
+            this.cb_status.Size = new System.Drawing.Size(136, 23);
+            this.cb_status.TabIndex = 4;
             // 
             // cb_priority
             // 
@@ -121,8 +123,8 @@
             this.cb_priority.FormattingEnabled = true;
             this.cb_priority.Location = new System.Drawing.Point(6, 20);
             this.cb_priority.Name = "cb_priority";
-            this.cb_priority.Size = new System.Drawing.Size(140, 23);
-            this.cb_priority.TabIndex = 5;
+            this.cb_priority.Size = new System.Drawing.Size(136, 23);
+            this.cb_priority.TabIndex = 6;
             // 
             // cb_assigned
             // 
@@ -135,15 +137,15 @@
             "Никому"});
             this.cb_assigned.Location = new System.Drawing.Point(6, 19);
             this.cb_assigned.Name = "cb_assigned";
-            this.cb_assigned.Size = new System.Drawing.Size(140, 23);
-            this.cb_assigned.TabIndex = 5;
+            this.cb_assigned.Size = new System.Drawing.Size(136, 23);
+            this.cb_assigned.TabIndex = 8;
             // 
             // bt_newissue
             // 
             this.bt_newissue.Location = new System.Drawing.Point(6, 19);
             this.bt_newissue.Name = "bt_newissue";
             this.bt_newissue.Size = new System.Drawing.Size(75, 23);
-            this.bt_newissue.TabIndex = 6;
+            this.bt_newissue.TabIndex = 9;
             this.bt_newissue.Text = "Создать";
             this.bt_newissue.UseVisualStyleBackColor = true;
             this.bt_newissue.Click += new System.EventHandler(this.bt_newissue_Click);
@@ -153,7 +155,7 @@
             this.bt_cancel.Location = new System.Drawing.Point(119, 19);
             this.bt_cancel.Name = "bt_cancel";
             this.bt_cancel.Size = new System.Drawing.Size(75, 23);
-            this.bt_cancel.TabIndex = 6;
+            this.bt_cancel.TabIndex = 10;
             this.bt_cancel.Text = "Отмена";
             this.bt_cancel.UseVisualStyleBackColor = true;
             this.bt_cancel.Click += new System.EventHandler(this.bt_cancel_Click);
@@ -179,8 +181,8 @@
             this.cb_checkmember.FormattingEnabled = true;
             this.cb_checkmember.Location = new System.Drawing.Point(6, 15);
             this.cb_checkmember.Name = "cb_checkmember";
-            this.cb_checkmember.Size = new System.Drawing.Size(183, 84);
-            this.cb_checkmember.TabIndex = 8;
+            this.cb_checkmember.Size = new System.Drawing.Size(179, 68);
+            this.cb_checkmember.TabIndex = 7;
             // 
             // groupBox1
             // 
@@ -202,7 +204,7 @@
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox2.Location = new System.Drawing.Point(49, 66);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(258, 48);
+            this.groupBox2.Size = new System.Drawing.Size(254, 44);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Тема*";
@@ -216,7 +218,7 @@
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox3.Location = new System.Drawing.Point(49, 120);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(258, 112);
+            this.groupBox3.Size = new System.Drawing.Size(254, 108);
             this.groupBox3.TabIndex = 9;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Описание";
@@ -230,7 +232,7 @@
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox4.Location = new System.Drawing.Point(12, 238);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(152, 51);
+            this.groupBox4.Size = new System.Drawing.Size(148, 47);
             this.groupBox4.TabIndex = 9;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Статус*";
@@ -244,7 +246,7 @@
             this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox5.Location = new System.Drawing.Point(170, 295);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(195, 105);
+            this.groupBox5.Size = new System.Drawing.Size(191, 101);
             this.groupBox5.TabIndex = 9;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Наблюдатели";
@@ -258,7 +260,7 @@
             this.groupBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox6.Location = new System.Drawing.Point(12, 295);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(152, 51);
+            this.groupBox6.Size = new System.Drawing.Size(148, 47);
             this.groupBox6.TabIndex = 9;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Приоритет*";
@@ -272,7 +274,7 @@
             this.groupBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox7.Location = new System.Drawing.Point(12, 352);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(152, 48);
+            this.groupBox7.Size = new System.Drawing.Size(148, 44);
             this.groupBox7.TabIndex = 9;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Назначена";
@@ -287,7 +289,7 @@
             this.groupBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox8.Location = new System.Drawing.Point(170, 241);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(195, 48);
+            this.groupBox8.Size = new System.Drawing.Size(191, 44);
             this.groupBox8.TabIndex = 9;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Оценка трудозатрат";
@@ -326,7 +328,7 @@
             "24"});
             this.cb_estimated_hours.Location = new System.Drawing.Point(6, 19);
             this.cb_estimated_hours.Name = "cb_estimated_hours";
-            this.cb_estimated_hours.Size = new System.Drawing.Size(125, 23);
+            this.cb_estimated_hours.Size = new System.Drawing.Size(121, 23);
             this.cb_estimated_hours.TabIndex = 5;
             // 
             // groupBox9
@@ -354,7 +356,8 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cb_private);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(390, 509);
             this.MinimumSize = new System.Drawing.Size(390, 509);
             this.Name = "Form_NewIssue";
